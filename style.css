@@ -1,0 +1,77 @@
+.root
+{
+    -fx-background-color: 
+        linear-gradient(
+            to bottom right,
+            #1e1e1e,
+            #7b7474
+        );
+}
+.card
+{
+    -fx-background-color: white;
+    -fx-background-radius: 20;
+    -fx-padding: 30;
+    -fx-effect: dropshadow(
+        gaussian,
+        rgba(0,0,0,0.3),
+        15,
+        0,
+        0,
+        5
+    );
+}
+.label
+{
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+}
+
+.title
+{
+    -fx-font-size: 24;
+    -fx-font-weight: bold;
+
+}
+
+.button
+{
+    -fx-background-color: rgba(114, 114, 114, 0.4);
+    -fx-text-fill: white;
+    -fx-background-radius: 10;
+    -fx-font-size: 14px;
+    -fx-padding: 10 25 10 25;
+}
+
+.button:hover
+{
+    -fx-background-color: rgba(0, 0, 255, 0.6);
+    -fx-text-fill: white;
+}
+
+.login-button
+{
+    -fx-background-color: #3b82f6;
+}
+
+.loginbutton:hover
+{
+    -fx-background-color: #2563eb;
+}
+
+#clearButton
+{
+    -fx-background-color: red;
+}
+
+#clearButton:hover 
+{
+    -fx-background-color: rgb(193, 32, 32);
+}
+
+.text-field,
+.password-field
+{
+    -fx-background-radius: 35;
+    -fx-padding: 10;
+}
