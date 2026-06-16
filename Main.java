@@ -12,13 +12,13 @@ public class Main extends Application
     {
         FXMLLoader loader =
                 new FXMLLoader(
-                    getClass().getResource("login1.fxml")
+                    getClass().getResource("login.fxml")
                 );
 
         Scene scene =
                 new Scene(loader.load());
 
-        scene.getStylesheets().add(getClass().getResource("style1.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
 
         stage.setScene(scene);
 
