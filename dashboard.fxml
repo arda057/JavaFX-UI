@@ -13,7 +13,7 @@
             <Label styleClass="title" text="Dashboard" />
             <Label fx:id="welcomeLabel" text="Welcome" />
             <ListView prefHeight="100.0" prefWidth="200.0" />
-            <Button mnemonicParsing="false" text="Profile" />
+            <Button mnemonicParsing="false" onAction="#studentTable" text="Student Table" />
             <Button mnemonicParsing="false" text="Settings" />
             <Button mnemonicParsing="false" onAction="#logout" text="Logout" />
          </children>

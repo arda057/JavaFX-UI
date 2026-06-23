@@ -37,4 +37,25 @@ public class DashboardController {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    private void studentTable(ActionEvent event){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("student.fxml"));
+
+            Parent root = loader.load();
+
+            Scene scene = new Scene(root);
+
+            scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+
+            Stage stage = (Stage)((javafx.scene.Node)event.getSource()).getScene().getWindow();
+
+            stage.setScene(scene);
+
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }        
+    }
 }
