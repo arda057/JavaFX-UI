@@ -47,11 +47,12 @@ public class StudentController {
         departmentColumn.setCellValueFactory(new PropertyValueFactory<>("department"));
 
         students.addAll(
-            new Student(1,"Dean",2.10,"Gastronomy"),
-            new Student(2,"Sam",3.90,"Law"),
-            new Student(3,"Cass",3.80,"Public Relations")
+            DatabaseManager.getStudents()
         );
+
         studentTable.setItems(students);
+
+        loadStudents();
 
         studentTable.setOnMouseClicked(event ->
         {
@@ -82,7 +83,9 @@ public class StudentController {
             String department = departmentField.getText();
             Student student = new Student(id, name, gpa, department);
 
-            students.add(student);
+            DatabaseManager.insertStudent(student);
+
+            loadStudents();
 
             idField.clear();
             nameField.clear();
@@ -98,15 +101,19 @@ public class StudentController {
     private void deleteStudent(){
         Student selected = studentTable.getSelectionModel().getSelectedItem();
 
-        if(selected != null)
+        if(selected == null)
         {
-            students.remove(selected);
-
-            idField.clear();
-            nameField.clear();
-            gpaField.clear();
-            departmentField.clear();
+            return;
         }
+        DatabaseManager.deleteStudent(selected.getId());
+
+        loadStudents();
+
+        idField.clear();
+        nameField.clear();
+        gpaField.clear();
+        departmentField.clear();
+
     }
 
     @FXML 
@@ -118,21 +125,30 @@ public class StudentController {
         }
 
         try {
-            selected.setId(Integer.parseInt(idField.getText()));
-            selected.setName(nameField.getText());
-            selected.setGpa(Double.parseDouble(gpaField.getText()));
-            selected.setDepartment(departmentField.getText());   
-            
-            studentTable.refresh();
+            Student updatedStudent = new Student(
+                Integer.parseInt(idField.getText()),
+                nameField.getText(),
+                Double.parseDouble(gpaField.getText()),
+                departmentField.getText()
+            );
+
+            DatabaseManager.updateStudent(updatedStudent);
+
+            loadStudents();
 
             idField.clear();
             nameField.clear();
             gpaField.clear();
             departmentField.clear();
         } catch (Exception e) {
-            System.out.println("Invalid input!");
+            e.printStackTrace();
         }
 
+    }
+
+    private void loadStudents(){
+        students.clear();
+        students.addAll(DatabaseManager.getStudents());
     }
 
     @FXML
