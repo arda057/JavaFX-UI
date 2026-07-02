@@ -2,6 +2,7 @@ package JavaFXexample;
 
 import java.sql.Connection;
 
+import JavaFXexample.database.DatabaseManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -14,13 +15,13 @@ public class Main extends Application
     {
         FXMLLoader loader =
                 new FXMLLoader(
-                    getClass().getResource("login.fxml")
+                    getClass().getResource("fxml/login.fxml")
                 );
 
         Scene scene =
                 new Scene(loader.load());
 
-        scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("css/style.css").toExternalForm());
 
         stage.setScene(scene);
 
@@ -36,8 +37,6 @@ public class Main extends Application
             e.printStackTrace();
         }
         DatabaseManager.createTable();
-        Student student = new Student(1, "Dean", 2.10, "Gastronomy");
-        DatabaseManager.insertStudent(student);
     }
 
     public static void main(String[] args)

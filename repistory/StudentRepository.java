@@ -1,46 +1,17 @@
-package JavaFXexample;
+package JavaFXexample.repistory;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DatabaseManager {
-    private static final String URL = "jdbc:sqlite:students.db";
+import JavaFXexample.database.DatabaseManager;
+import JavaFXexample.model.Student;
 
-    public static Connection connect() throws SQLException 
-    {
-        return DriverManager.getConnection(URL);
-    }
-
-    public static void createTable(){
-        String sql = 
-                """
-                CREATE TABLE IF NOT EXISTS students(
-                    id INTEGER PRIMARY KEY,
-                    name TEXT NOT NULL,
-                    gpa REAL,
-                    department TEXT
-                ) 
-                """;
-
-        try (
-            Connection conn = connect();
-            Statement stmt = conn.createStatement();
-        )
-        {
-            stmt.execute(sql);
-        }    
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void insertStudent(Student student){
+public class StudentRepository {
+    public void insertStudent(Student student){
         String sql = 
                 """
                 INSERT INTO students 
@@ -48,7 +19,7 @@ public class DatabaseManager {
                 VALUES (?,?,?,?)
                 """;
         try (
-            Connection conn = connect();
+            Connection conn = DatabaseManager.connect();
             PreparedStatement pstmt = conn.prepareStatement(sql);
         )
         {
@@ -65,12 +36,61 @@ public class DatabaseManager {
         }
     }
 
-    public static List<Student> getStudents(){
+    public void updateStudent(Student student){
+        String sql = 
+                """
+                UPDATE students
+                SET name = ?,
+                    gpa = ?,
+                    department = ?
+                WHERE id = ?
+                """;
+
+        try (
+            Connection conn = DatabaseManager.connect();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+        ) 
+        {
+            pstmt.setString(1, student.getName());
+            pstmt.setDouble(2, student.getGpa());
+            pstmt.setString(3, student.getDepartment());
+            pstmt.setInt(4, student.getId());
+
+            pstmt.executeUpdate();
+
+            System.out.println("Student uploaded!");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteStudent(int id){
+        String sql = 
+                """
+                DELETE FROM students 
+                WHERE id = ?;
+                """;
+        try (
+            Connection conn = DatabaseManager.connect();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+        ) 
+        {
+            pstmt.setInt(1, id);
+
+            pstmt.executeUpdate();
+
+            System.out.println("Student deleted!");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<Student> getStudents(){
         List<Student> students = new ArrayList<>();
         String sql = "SELECT * FROM students";
 
         try (
-            Connection conn = connect();
+            Connection conn = DatabaseManager.connect();
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
         )
@@ -90,52 +110,4 @@ public class DatabaseManager {
         return students;
     }
 
-    public static void updateStudent(Student student){
-        String sql = 
-                """
-                UPDATE students
-                SET name = ?,
-                    gpa = ?,
-                    department = ?
-                WHERE id = ?
-                """;
-
-        try (
-            Connection conn = connect();
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-        ) 
-        {
-            pstmt.setString(1, student.getName());
-            pstmt.setDouble(2, student.getGpa());
-            pstmt.setString(3, student.getDepartment());
-            pstmt.setInt(4, student.getId());
-
-            pstmt.executeUpdate();
-
-            System.out.println("Student uploaded!");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void deleteStudent(int id){
-        String sql = 
-                """
-                DELETE FROM students 
-                WHERE id = ?;
-                """;
-        try (
-            Connection conn = connect();
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-        ) 
-        {
-            pstmt.setInt(1, id);
-
-            pstmt.executeUpdate();
-
-            System.out.println("Student deleted!");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }

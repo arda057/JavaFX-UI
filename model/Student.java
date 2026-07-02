@@ -1,4 +1,4 @@
-package JavaFXexample;
+package JavaFXexample.model;
 
 public class Student 
 {

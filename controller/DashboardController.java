@@ -1,4 +1,4 @@
-package JavaFXexample;
+package JavaFXexample.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,13 +20,13 @@ public class DashboardController {
     @FXML
     private void logout(ActionEvent event){
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/JavaFXexample/fxml/login.fxml"));
 
             Parent root = loader.load();
 
             Scene scene = new Scene(root);
 
-            scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+            scene.getStylesheets().add(getClass().getResource("/JavaFXexample/css/style.css").toExternalForm());
 
             Stage stage = (Stage)((javafx.scene.Node)event.getSource()).getScene().getWindow();
 
@@ -41,13 +41,13 @@ public class DashboardController {
     @FXML
     private void studentTable(ActionEvent event){
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("student.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/JavaFXexample/fxml/student.fxml"));
 
             Parent root = loader.load();
 
             Scene scene = new Scene(root);
 
-            scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+            scene.getStylesheets().add(getClass().getResource("/JavaFXexample/css/style.css").toExternalForm());
 
             Stage stage = (Stage)((javafx.scene.Node)event.getSource()).getScene().getWindow();
 

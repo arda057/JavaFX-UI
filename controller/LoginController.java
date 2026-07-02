@@ -1,4 +1,4 @@
-package JavaFXexample;
+package JavaFXexample.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -36,7 +36,7 @@ public class LoginController
             resultLabel.getStyleClass().setAll("succsess");
 
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("dashboard.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/JavaFXexample/fxml/dashboard.fxml"));
 
                 Parent root = loader.load();
 
@@ -48,7 +48,7 @@ public class LoginController
                 
                 Scene scene = new Scene(root);
 
-                scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+                scene.getStylesheets().add(getClass().getResource("/JavaFXexample/css/style.css").toExternalForm());
 
                 stage.setScene(scene);
 
