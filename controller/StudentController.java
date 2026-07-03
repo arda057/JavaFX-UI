@@ -2,6 +2,7 @@ package JavaFXexample.controller;
 
 import JavaFXexample.model.Student;
 import JavaFXexample.service.StudentService;
+import JavaFXexample.util.AlertHelper;
 import JavaFXexample.util.Validator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -62,7 +63,7 @@ public class StudentController {
 
         studentTable.setOnMouseClicked(event ->
         {
-            if(event.getClickCount() == 1)
+            if(event.getClickCount() == 2)
             {
                 Student selected = studentTable.getSelectionModel().getSelectedItem();
 
@@ -87,23 +88,22 @@ public class StudentController {
                 || Validator.isEmpty(gpaField.getText())
                 || Validator.isEmpty(nameField.getText())
                 || Validator.isEmpty(departmentField.getText())) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
 
-            alert.setTitle("Warning");
-            alert.setHeaderText("Missing Information");
-            alert.setContentText("Please fill all fields");
+            AlertHelper.showWarning(
+                "Warning", 
+                "Missing Information", 
+                "Please fill all fields");
 
-            alert.showAndWait();
             return;
         }
 
         if (!Validator.isInteger(idField.getText())) {
-            System.out.println("ID must be an integer.");
+            AlertHelper.showWarning("Input Warning", "Invalid ID", "ID must be an integer.");
             return;
         }
 
         if (!Validator.isDouble(gpaField.getText())) {
-            System.out.println("GPA must be numeric.");
+            AlertHelper.showWarning("Input Warning", "Invalid GPA", "GPA must be numeric.");
             return;
         }
 
@@ -111,13 +111,7 @@ public class StudentController {
         Double gpa = Double.parseDouble(gpaField.getText());
 
         if (!Validator.isValidGPA(gpa)) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-
-            alert.setTitle("Input Error");
-            alert.setHeaderText("Invalid GPA");
-            alert.setContentText("GPA must be between 0 and 4.");
-
-            alert.showAndWait();
+            AlertHelper.showWarning("Input Warning", "Invalid GPA", "GPA must be between 0 and 4.");
             return;
         }
 
@@ -135,13 +129,11 @@ public class StudentController {
         gpaField.clear();
         departmentField.clear();
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        AlertHelper.showInfo(
+            "Success", 
+            "Student Added", 
+            "The student has been added successfully.");
 
-        alert.setTitle("Success");
-        alert.setHeaderText("Student Added");
-        alert.setContentText("The student has been added successfully.");
-
-        alert.showAndWait();
     }
 
     @FXML
@@ -154,18 +146,26 @@ public class StudentController {
         }
 
         if (Validator.isEmpty(idField.getText())){
-            System.out.println("Please fill in the id field.");
+            AlertHelper.showWarning(
+                "Warning", 
+                "Missing Information", 
+                "Please fill in the id field.");
             return;
         }
 
         if (!Validator.isInteger(idField.getText())) {
-            System.out.println("ID must be an integer.");
+            AlertHelper.showWarning("Input Warning", "Invalid ID", "ID must be an integer.");
             return;
         }
 
         int id = Integer.parseInt(idField.getText());
         
-        studentService.deleteStudent(id);
+        if (AlertHelper.showConfirmation(
+                "Delete Student",
+                "Delete Confirmation",
+                "Are you sure?")) {
+            studentService.deleteStudent(id);
+        }
         
         loadStudents();
 
@@ -188,17 +188,20 @@ public class StudentController {
                 || Validator.isEmpty(gpaField.getText())
                 || Validator.isEmpty(nameField.getText())
                 || Validator.isEmpty(departmentField.getText())) {
-            System.out.println("Please fill all fields.");
+            AlertHelper.showWarning(
+                "Warning", 
+                "Missing Information", 
+                "Please fill all fields");
             return;
         }
 
         if (!Validator.isInteger(idField.getText())) {
-            System.out.println("ID must be an integer.");
+            AlertHelper.showWarning("Input Warning", "Invalid ID", "ID must be an integer.");
             return;
         }
 
         if (!Validator.isDouble(gpaField.getText())) {
-            System.out.println("GPA must be numeric.");
+            AlertHelper.showWarning("Input Warning", "Invalid GPA", "GPA must be numeric.");
             return;
         }
 
@@ -206,7 +209,7 @@ public class StudentController {
         Double gpa = Double.parseDouble(gpaField.getText());
 
         if (!Validator.isValidGPA(gpa)) {
-            System.out.println("GPA must be between 0 and 4.");
+            AlertHelper.showWarning("Input Warning", "Invalid GPA", "GPA must be between 0 and 4.");
             return;
         }
 
@@ -215,14 +218,16 @@ public class StudentController {
 
         Student updatedStudent = new Student(id, name, gpa, department);
 
-        studentService.updateStudent(updatedStudent);
+        if (AlertHelper.showConfirmation("Update Student", "Update Confirmation", "Are you sure?")) {
+            studentService.updateStudent(updatedStudent);
 
-        loadStudents();
+            loadStudents();
 
-        idField.clear();
-        nameField.clear();
-        gpaField.clear();
-        departmentField.clear();
+            idField.clear();
+            nameField.clear();
+            gpaField.clear();
+            departmentField.clear();
+        }
 
     }
 
