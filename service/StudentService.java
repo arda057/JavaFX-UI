@@ -12,8 +12,8 @@ public class StudentService {
         repository.insertStudent(student);
     }
 
-    public void updateStudent(Student student){
-        repository.updateStudent(student);
+    public void updateStudent(int id,Student student){
+        repository.updateStudent(id, student);
     }
 
     public void deleteStudent(int id){

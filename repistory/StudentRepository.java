@@ -36,11 +36,12 @@ public class StudentRepository {
         }
     }
 
-    public void updateStudent(Student student){
+    public void updateStudent(int id, Student student){
         String sql = 
                 """
                 UPDATE students
-                SET name = ?,
+                SET id = ?,
+                    name = ?,
                     gpa = ?,
                     department = ?
                 WHERE id = ?
@@ -51,10 +52,11 @@ public class StudentRepository {
             PreparedStatement pstmt = conn.prepareStatement(sql);
         ) 
         {
-            pstmt.setString(1, student.getName());
-            pstmt.setDouble(2, student.getGpa());
-            pstmt.setString(3, student.getDepartment());
-            pstmt.setInt(4, student.getId());
+            pstmt.setInt(1, student.getId());
+            pstmt.setString(2, student.getName());
+            pstmt.setDouble(3, student.getGpa());
+            pstmt.setString(4, student.getDepartment());
+            pstmt.setInt(5, id);
 
             pstmt.executeUpdate();
 
