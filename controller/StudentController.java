@@ -6,12 +6,13 @@ import JavaFXexample.util.AlertHelper;
 import JavaFXexample.util.Validator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -38,7 +39,13 @@ public class StudentController {
     @FXML
     private TextField departmentField;
     @FXML
-    private ObservableList<Student> students = FXCollections.observableArrayList();
+    private TextField searchField;
+
+    private final ObservableList<Student> students = FXCollections.observableArrayList();
+
+    private final FilteredList<Student> filteredStudents = new FilteredList<>(students, p -> true);
+
+    private final SortedList<Student> sortedStudents = new SortedList<>(filteredStudents);
     
     private StudentService studentService = new StudentService();
 
@@ -57,26 +64,54 @@ public class StudentController {
             studentService.getStudents()
         );
 
-        studentTable.setItems(students);
+        searchField.textProperty().addListener(
+                (observable, oldValue, newValue) -> {
+                    filteredStudents.setPredicate(student -> {
+                        if (newValue == null || newValue.isBlank()) {
+                            return true;
+                        }
 
-        loadStudents();
+                        String keyword = newValue.toLowerCase();
 
-        studentTable.setOnMouseClicked(event ->
-        {
-            if(event.getClickCount() == 2)
-            {
+                        return student.getName().toLowerCase().contains(keyword)
+                                ||
+
+                                student.getDepartment()
+                                        .toLowerCase()
+                                        .contains(keyword)
+
+                                ||
+
+                                String.valueOf(student.getId())
+                                        .contains(keyword)
+
+                                ||
+
+                                String.valueOf(student.getGpa())
+                                        .contains(keyword);
+                    });
+                });
+
+        sortedStudents.comparatorProperty().bind(
+            studentTable.comparatorProperty()
+        );
+        studentTable.setItems(sortedStudents);
+
+        studentTable.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
                 Student selected = studentTable.getSelectionModel().getSelectedItem();
 
-                if(selected != null)
-                {
-                    System.out.println("Student: " + selected.getName());
-                    System.out.println("Department: " + selected.getDepartment());
+                if (selected == null)
+                    return;
 
-                    idField.setText(String.valueOf(selected.getId()));
-                    nameField.setText(selected.getName());
-                    gpaField.setText(String.valueOf(selected.getGpa()));
-                    departmentField.setText(selected.getDepartment());
-                }
+                System.out.println("Student: " + selected.getName());
+                System.out.println("Department: " + selected.getDepartment());
+
+                idField.setText(String.valueOf(selected.getId()));
+                nameField.setText(selected.getName());
+                gpaField.setText(String.valueOf(selected.getGpa()));
+                departmentField.setText(selected.getDepartment());
+
             }
         });
     }
@@ -144,27 +179,12 @@ public class StudentController {
         {
             return;
         }
-
-        if (Validator.isEmpty(idField.getText())){
-            AlertHelper.showWarning(
-                "Warning", 
-                "Missing Information", 
-                "Please fill in the id field.");
-            return;
-        }
-
-        if (!Validator.isInteger(idField.getText())) {
-            AlertHelper.showWarning("Input Warning", "Invalid ID", "ID must be an integer.");
-            return;
-        }
-
-        int id = Integer.parseInt(idField.getText());
         
         if (AlertHelper.showConfirmation(
                 "Delete Student",
                 "Delete Confirmation",
                 "Are you sure?")) {
-            studentService.deleteStudent(id);
+            studentService.deleteStudent(selected.getId());
         }
         
         loadStudents();
@@ -219,7 +239,7 @@ public class StudentController {
         Student updatedStudent = new Student(id, name, gpa, department);
 
         if (AlertHelper.showConfirmation("Update Student", "Update Confirmation", "Are you sure?")) {
-            studentService.updateStudent(updatedStudent);
+            studentService.updateStudent(selected.getId(),updatedStudent);
 
             loadStudents();
 
@@ -232,8 +252,7 @@ public class StudentController {
     }
 
     private void loadStudents(){
-        students.clear();
-        students.addAll(studentService.getStudents());
+        students.setAll(studentService.getStudents());
     }
 
     @FXML
