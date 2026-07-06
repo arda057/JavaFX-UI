@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -40,6 +41,8 @@ public class StudentController {
     private TextField departmentField;
     @FXML
     private TextField searchField;
+    @FXML
+    private Button addButton;
 
     private final ObservableList<Student> students = FXCollections.observableArrayList();
 
@@ -114,6 +117,16 @@ public class StudentController {
 
             }
         });
+
+        addButton.disableProperty().bind(
+            idField.textProperty().isEmpty().or(
+                nameField.textProperty().isEmpty().or(
+                    gpaField.textProperty().isEmpty().or(
+                        departmentField.textProperty().isEmpty()
+                    )
+                )
+            )
+        );
     }
 
     @FXML
@@ -157,7 +170,7 @@ public class StudentController {
 
         studentService.addStudent(student);
 
-        loadStudents();
+        students.add(student);
 
         idField.clear();
         nameField.clear();
@@ -187,7 +200,7 @@ public class StudentController {
             studentService.deleteStudent(selected.getId());
         }
         
-        loadStudents();
+        students.remove(selected);
 
         idField.clear();
         nameField.clear();
@@ -241,7 +254,10 @@ public class StudentController {
         if (AlertHelper.showConfirmation("Update Student", "Update Confirmation", "Are you sure?")) {
             studentService.updateStudent(selected.getId(),updatedStudent);
 
-            loadStudents();
+            selected.setId(id);
+            selected.setName(name);
+            selected.setDepartment(department);
+            selected.setGpa(gpa);
 
             idField.clear();
             nameField.clear();
@@ -249,10 +265,6 @@ public class StudentController {
             departmentField.clear();
         }
 
-    }
-
-    private void loadStudents(){
-        students.setAll(studentService.getStudents());
     }
 
     @FXML

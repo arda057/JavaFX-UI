@@ -1,53 +1,71 @@
 package JavaFXexample.model;
 
-public class Student 
-{
-    private int id;
-    private String name;
-    private double gpa;
-    private String department;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
-    public Student(int id, String name, double gpa, String department)
-    {
-        this.id = id;
-        this.name = name;
-        this.gpa = gpa;
-        this.department = department;
+public class Student {
+    private final IntegerProperty id = new SimpleIntegerProperty();
+    private final StringProperty name = new SimpleStringProperty();
+    private final DoubleProperty gpa = new SimpleDoubleProperty();
+    private final StringProperty department = new SimpleStringProperty();
+
+    public Student(int id, String name, double gpa, String department) {
+        this.id.set(id);
+        this.name.set(name);
+        this.gpa.set(gpa);
+        this.department.set(department);
     }
 
-    public int getId()
-    {
+    public IntegerProperty idProperty() {
         return id;
     }
 
-    public String getName()
-    {
+    public StringProperty nameProperty() {
         return name;
     }
 
-    public double getGpa()
-    {
+    public DoubleProperty gpaProperty() {
         return gpa;
     }
 
-    public String getDepartment()
-    {
+    public StringProperty departmentProperty() {
         return department;
     }
 
-    public void setId(int id){
-        this.id = id;
+    public int getId() {
+        return id.get();
     }
 
-    public void setName(String name){
-        this.name = name;
+    public String getName() {
+        return name.get();
     }
 
-    public void setGpa(double gpa){
-        this.gpa = gpa;
+    public double getGpa() {
+        return gpa.get();
     }
 
-    public void setDepartment(String department){
-        this.department = department;
+    public String getDepartment() {
+        return department.get();
     }
+
+    public void setId(int value) {
+        id.set(value);
+    }
+
+    public void setName(String value) {
+        name.set(value);
+    }
+
+    public void setGpa(double value) {
+        gpa.set(value);
+    }
+
+    public void setDepartment(String value) {
+        department.set(value);
+    }
+
 }
