@@ -14,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -31,6 +32,8 @@ public class StudentController {
     private TableColumn<Student,Double> gpaColumn;
     @FXML
     private TableColumn<Student,String> departmentColumn;
+    @FXML
+    private TableColumn<Student,Void> actionColumn;
     @FXML
     private TextField idField;
     @FXML
@@ -61,9 +64,73 @@ public class StudentController {
 
         gpaColumn.setCellValueFactory(new PropertyValueFactory<>("gpa"));
 
+        gpaColumn.setCellFactory(column -> new TableCell<Student, Double>() {
+            @Override
+            protected void updateItem(Double gpa, boolean empty) {
+
+                super.updateItem(gpa, empty);
+
+                if (empty || gpa == null) {
+
+                    setText(null);
+                    setStyle("");
+
+                    return;
+                }
+
+                setText(String.format("%.2f", gpa));
+
+                if (gpa >= 3.5) {
+
+                    setStyle("-fx-text-fill: green;");
+
+                } else if (gpa >= 2.5) {
+
+                    setStyle("-fx-text-fill: orange;");
+
+                } else {
+
+                    setStyle("-fx-text-fill: red;");
+                }
+            }
+        });
+
         departmentColumn.setCellValueFactory(new PropertyValueFactory<>("department"));
 
-        students.addAll(
+        actionColumn.setCellFactory(column -> new TableCell<>() {
+
+            private final Button editButton = new Button("Edit");
+
+            {
+                editButton.setOnAction(event -> {
+
+                    Student student = getTableView()
+                            .getItems()
+                            .get(getIndex());
+
+                    System.out.println(student.getName());
+
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+
+                super.updateItem(item, empty);
+
+                if (empty) {
+
+                    setGraphic(null);
+
+                } else {
+
+                    setGraphic(editButton);
+                }
+            }
+
+        });
+
+        students.setAll(
             studentService.getStudents()
         );
 
@@ -100,23 +167,18 @@ public class StudentController {
         );
         studentTable.setItems(sortedStudents);
 
-        studentTable.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2) {
-                Student selected = studentTable.getSelectionModel().getSelectedItem();
-
-                if (selected == null)
-                    return;
-
-                System.out.println("Student: " + selected.getName());
-                System.out.println("Department: " + selected.getDepartment());
-
-                idField.setText(String.valueOf(selected.getId()));
-                nameField.setText(selected.getName());
-                gpaField.setText(String.valueOf(selected.getGpa()));
-                departmentField.setText(selected.getDepartment());
-
+        studentTable.getSelectionModel().selectedItemProperty().addListener((observable, oldStudent, newStudent) -> {
+            if(newStudent == null){
+                clearFields();
+                return;
             }
+
+            idField.setText(String.valueOf(newStudent.getId()));
+            nameField.setText(newStudent.getName());
+            gpaField.setText(String.valueOf(newStudent.getGpa()));
+            departmentField.setText(newStudent.getDepartment());
         });
+
 
         addButton.disableProperty().bind(
             idField.textProperty().isEmpty().or(
@@ -127,6 +189,16 @@ public class StudentController {
                 )
             )
         );
+    }
+
+    @FXML
+    private void clearForm() {
+
+        clearSelection();
+        clearFields();
+
+        idField.requestFocus();
+
     }
 
     @FXML
@@ -172,10 +244,7 @@ public class StudentController {
 
         students.add(student);
 
-        idField.clear();
-        nameField.clear();
-        gpaField.clear();
-        departmentField.clear();
+        clearFields();
 
         AlertHelper.showInfo(
             "Success", 
@@ -202,10 +271,7 @@ public class StudentController {
         
         students.remove(selected);
 
-        idField.clear();
-        nameField.clear();
-        gpaField.clear();
-        departmentField.clear();
+        clearFields();
 
     }
 
@@ -259,12 +325,20 @@ public class StudentController {
             selected.setDepartment(department);
             selected.setGpa(gpa);
 
-            idField.clear();
-            nameField.clear();
-            gpaField.clear();
-            departmentField.clear();
+            clearFields();
         }
 
+    }
+
+    private void clearFields() {
+        idField.clear();
+        nameField.clear();
+        gpaField.clear();
+        departmentField.clear();
+    }
+
+    private void clearSelection() {
+        studentTable.getSelectionModel().clearSelection();
     }
 
     @FXML
