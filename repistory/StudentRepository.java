@@ -3,6 +3,7 @@ package JavaFXexample.repistory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +12,7 @@ import JavaFXexample.database.DatabaseManager;
 import JavaFXexample.model.Student;
 
 public class StudentRepository {
-    public void insertStudent(Student student){
+    public boolean insertStudent(Student student){
         String sql = 
                 """
                 INSERT INTO students 
@@ -30,9 +31,14 @@ public class StudentRepository {
 
             pstmt.executeUpdate();
 
-            System.out.println("Student inserted!");
-        } catch (Exception e) {
+            return true;
+        } catch (SQLException e) {
+            if (e.getErrorCode() == 19) {
+                return false;
+            }
+
             e.printStackTrace();
+            return true;
         }
     }
 

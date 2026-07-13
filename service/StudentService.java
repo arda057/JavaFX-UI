@@ -8,8 +8,8 @@ import JavaFXexample.repistory.StudentRepository;
 public class StudentService {
     private final StudentRepository repository = new StudentRepository();
 
-    public void addStudent(Student student){
-        repository.insertStudent(student);
+    public boolean addStudent(Student student){
+        return repository.insertStudent(student);
     }
 
     public void updateStudent(int id,Student student){

@@ -240,16 +240,21 @@ public class StudentController {
 
         Student student = new Student(id, name, gpa, department);
 
-        studentService.addStudent(student);
+        boolean inserted = studentService.addStudent(student);
 
-        students.add(student);
+        if(inserted){
+            students.add(student);
 
-        clearFields();
+            clearFields();
 
-        AlertHelper.showInfo(
-            "Success", 
-            "Student Added", 
-            "The student has been added successfully.");
+            AlertHelper.showInfo(
+                    "Success",
+                    "Student Added",
+                    "The student has been added successfully.");
+        }
+        else{
+            AlertHelper.showError("Error","This ID is in use.","Student could not be added");
+        }
 
     }
 
