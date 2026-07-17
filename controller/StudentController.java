@@ -1,9 +1,9 @@
 package JavaFXexample.controller;
 
+import JavaFXexample.model.DialogMode;
 import JavaFXexample.model.Student;
 import JavaFXexample.service.StudentService;
 import JavaFXexample.util.AlertHelper;
-import JavaFXexample.util.Validator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -16,6 +16,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -104,11 +105,37 @@ public class StudentController {
             {
                 editButton.setOnAction(event -> {
 
-                    Student student = getTableView()
-                            .getItems()
-                            .get(getIndex());
+                    try {
+                        Student student = getTableView()
+                                .getItems()
+                                .get(getIndex());
 
-                    System.out.println(student.getName());
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/JavaFXexample/fxml/student-dialog.fxml"));
+
+                        Parent root = loader.load();
+
+                        StudentDialogController controller = loader.getController();
+
+                        controller.setMode(DialogMode.EDIT);
+
+                        controller.setStudent(student);
+
+                        controller.setOnSaveCallback(() -> {
+                            loadStudents();
+                        });
+
+                        Stage dialogStage = new Stage();
+
+                        dialogStage.setScene(new Scene(root));
+
+                        dialogStage.setTitle("Edit Student");
+
+                        dialogStage.show();
+
+                        System.out.println(student.getName());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
                 });
             }
@@ -167,20 +194,23 @@ public class StudentController {
         );
         studentTable.setItems(sortedStudents);
 
-        studentTable.getSelectionModel().selectedItemProperty().addListener((observable, oldStudent, newStudent) -> {
-            if(newStudent == null){
-                clearFields();
-                return;
-            }
+        studentTable.setRowFactory(tv -> {
+            TableRow<Student> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && !row.isEmpty()) {
+                    Student newStudent = row.getItem();
 
-            idField.setText(String.valueOf(newStudent.getId()));
-            nameField.setText(newStudent.getName());
-            gpaField.setText(String.valueOf(newStudent.getGpa()));
-            departmentField.setText(newStudent.getDepartment());
+                    idField.setText(String.valueOf(newStudent.getId()));
+                    nameField.setText(newStudent.getName());
+                    gpaField.setText(String.valueOf(newStudent.getGpa()));
+                    departmentField.setText(newStudent.getDepartment());
+                }
+            });
+            return row;
         });
 
 
-        addButton.disableProperty().bind(
+        /* addButton.disableProperty().bind(
             idField.textProperty().isEmpty().or(
                 nameField.textProperty().isEmpty().or(
                     gpaField.textProperty().isEmpty().or(
@@ -188,23 +218,38 @@ public class StudentController {
                     )
                 )
             )
-        );
-    }
-
-    @FXML
-    private void clearForm() {
-
-        clearSelection();
-        clearFields();
-
-        idField.requestFocus();
+        ); */
 
     }
 
     @FXML
     private void addStudent() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/JavaFXexample/fxml/student-dialog.fxml"));
 
-        if (Validator.isEmpty(idField.getText())
+            Parent root = loader.load();
+
+            StudentDialogController controller = loader.getController();
+
+            controller.setMode(DialogMode.ADD);
+
+            controller.setOnSaveCallback(() -> {
+                loadStudents();
+            });
+
+            Stage dialogStage = new Stage();
+
+            dialogStage.setScene(new Scene(root));
+
+            dialogStage.setTitle("Add Student");
+
+            dialogStage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        /* if (Validator.isEmpty(idField.getText())
                 || Validator.isEmpty(gpaField.getText())
                 || Validator.isEmpty(nameField.getText())
                 || Validator.isEmpty(departmentField.getText())) {
@@ -254,7 +299,7 @@ public class StudentController {
         }
         else{
             AlertHelper.showError("Error","This ID is in use.","Student could not be added");
-        }
+        } */
 
     }
 
@@ -282,7 +327,7 @@ public class StudentController {
 
     @FXML 
     private void updateStudent(){
-        Student selected = studentTable.getSelectionModel().getSelectedItem();
+        /* Student selected = studentTable.getSelectionModel().getSelectedItem();
 
         if(selected == null){
             return;
@@ -331,8 +376,14 @@ public class StudentController {
             selected.setGpa(gpa);
 
             clearFields();
-        }
+        } */
 
+    }
+
+    private void loadStudents(){
+        students.setAll(
+            studentService.getStudents()
+        );
     }
 
     private void clearFields() {
@@ -340,6 +391,16 @@ public class StudentController {
         nameField.clear();
         gpaField.clear();
         departmentField.clear();
+    }
+
+    @FXML
+    private void clearForm() {
+
+        clearSelection();
+        clearFields();
+
+        idField.requestFocus();
+
     }
 
     private void clearSelection() {

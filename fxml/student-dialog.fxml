@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="JavaFXexample.controller.StudentDialogController">
+   <children>
+      <Label fx:id="dialogLabel" />
+      <TextField fx:id="idField" promptText="ID" />
+      <TextField fx:id="nameField" promptText="Name" />
+      <TextField fx:id="gpaField" promptText="GPA" />
+      <TextField fx:id="departmentField" promptText="Department" />
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+         <children>
+            <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveStudent" text="Save" />
+            <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#closeDialog" text="Cancel" />
+         </children>
+      </HBox>
+   </children>
+</VBox>
