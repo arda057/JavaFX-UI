@@ -27,6 +27,8 @@ public class Main extends Application
 
         stage.setTitle("Login");
 
+        stage.setResizable(false);
+
         stage.show();
 
         try {

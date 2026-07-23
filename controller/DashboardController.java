@@ -1,12 +1,9 @@
 package JavaFXexample.controller;
 
+import JavaFXexample.util.SceneManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.stage.Stage;
 
 public class DashboardController {
     @FXML
@@ -19,43 +16,11 @@ public class DashboardController {
 
     @FXML
     private void logout(ActionEvent event){
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/JavaFXexample/fxml/login.fxml"));
-
-            Parent root = loader.load();
-
-            Scene scene = new Scene(root);
-
-            scene.getStylesheets().add(getClass().getResource("/JavaFXexample/css/style.css").toExternalForm());
-
-            Stage stage = (Stage)((javafx.scene.Node)event.getSource()).getScene().getWindow();
-
-            stage.setScene(scene);
-
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        SceneManager.FXMLloader(event, "/JavaFXexample/fxml/login.fxml", "/JavaFXexample/css/style.css", false);
     }
 
     @FXML
-    private void studentTable(ActionEvent event){
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/JavaFXexample/fxml/student.fxml"));
-
-            Parent root = loader.load();
-
-            Scene scene = new Scene(root);
-
-            scene.getStylesheets().add(getClass().getResource("/JavaFXexample/css/style.css").toExternalForm());
-
-            Stage stage = (Stage)((javafx.scene.Node)event.getSource()).getScene().getWindow();
-
-            stage.setScene(scene);
-
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }        
+    private void studentTable(ActionEvent event){        
+        SceneManager.FXMLloader(event, "/JavaFXexample/fxml/student.fxml", "/JavaFXexample/css/style.css",true);
     }
 }

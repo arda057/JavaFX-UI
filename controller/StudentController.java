@@ -4,23 +4,23 @@ import JavaFXexample.model.DialogMode;
 import JavaFXexample.model.Student;
 import JavaFXexample.service.StudentService;
 import JavaFXexample.util.AlertHelper;
+import JavaFXexample.util.SceneManager;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 
 public class StudentController {
     @FXML
@@ -104,38 +104,11 @@ public class StudentController {
 
             {
                 editButton.setOnAction(event -> {
-
-                    try {
-                        Student student = getTableView()
+                    Student student = getTableView()
                                 .getItems()
                                 .get(getIndex());
 
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/JavaFXexample/fxml/student-dialog.fxml"));
-
-                        Parent root = loader.load();
-
-                        StudentDialogController controller = loader.getController();
-
-                        controller.setMode(DialogMode.EDIT);
-
-                        controller.setStudent(student);
-
-                        controller.setOnSaveCallback(() -> {
-                            loadStudents();
-                        });
-
-                        Stage dialogStage = new Stage();
-
-                        dialogStage.setScene(new Scene(root));
-
-                        dialogStage.setTitle("Edit Student");
-
-                        dialogStage.show();
-
-                        System.out.println(student.getName());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    SceneManager.dialogLoader(student, DialogMode.EDIT, "/JavaFXexample/fxml/student-dialog.fxml", StudentController.this::loadStudents);
 
                 });
             }
@@ -196,110 +169,41 @@ public class StudentController {
 
         studentTable.setRowFactory(tv -> {
             TableRow<Student> row = new TableRow<>();
-            row.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 2 && !row.isEmpty()) {
-                    Student newStudent = row.getItem();
 
-                    idField.setText(String.valueOf(newStudent.getId()));
-                    nameField.setText(newStudent.getName());
-                    gpaField.setText(String.valueOf(newStudent.getGpa()));
-                    departmentField.setText(newStudent.getDepartment());
+            ContextMenu menu = new ContextMenu();
+            MenuItem editItem = new MenuItem("Edit Student");
+            MenuItem deleteItem = new MenuItem("Delete Student");
+            MenuItem detailItem = new MenuItem("Student Details");
+
+            menu.getItems().addAll(
+                    editItem,
+                    deleteItem,
+                    detailItem);
+
+            editItem.setOnAction(event -> {
+                Student student = row.getItem();
+
+                if (student == null) {
+                    return;
                 }
+
+               SceneManager.dialogLoader(student, DialogMode.EDIT, "/JavaFXexample/fxml/student-dialog.fxml", this::loadStudents);
+
             });
+
+            row.setContextMenu(menu);
+
+            row.contextMenuProperty().bind(
+                    Bindings.when(row.emptyProperty()).then((ContextMenu) null).otherwise(menu));
+
             return row;
         });
-
-
-        /* addButton.disableProperty().bind(
-            idField.textProperty().isEmpty().or(
-                nameField.textProperty().isEmpty().or(
-                    gpaField.textProperty().isEmpty().or(
-                        departmentField.textProperty().isEmpty()
-                    )
-                )
-            )
-        ); */
 
     }
 
     @FXML
     private void addStudent() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/JavaFXexample/fxml/student-dialog.fxml"));
-
-            Parent root = loader.load();
-
-            StudentDialogController controller = loader.getController();
-
-            controller.setMode(DialogMode.ADD);
-
-            controller.setOnSaveCallback(() -> {
-                loadStudents();
-            });
-
-            Stage dialogStage = new Stage();
-
-            dialogStage.setScene(new Scene(root));
-
-            dialogStage.setTitle("Add Student");
-
-            dialogStage.show();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        /* if (Validator.isEmpty(idField.getText())
-                || Validator.isEmpty(gpaField.getText())
-                || Validator.isEmpty(nameField.getText())
-                || Validator.isEmpty(departmentField.getText())) {
-
-            AlertHelper.showWarning(
-                "Warning", 
-                "Missing Information", 
-                "Please fill all fields");
-
-            return;
-        }
-
-        if (!Validator.isInteger(idField.getText())) {
-            AlertHelper.showWarning("Input Warning", "Invalid ID", "ID must be an integer.");
-            return;
-        }
-
-        if (!Validator.isDouble(gpaField.getText())) {
-            AlertHelper.showWarning("Input Warning", "Invalid GPA", "GPA must be numeric.");
-            return;
-        }
-
-        int id = Integer.parseInt(idField.getText());
-        Double gpa = Double.parseDouble(gpaField.getText());
-
-        if (!Validator.isValidGPA(gpa)) {
-            AlertHelper.showWarning("Input Warning", "Invalid GPA", "GPA must be between 0 and 4.");
-            return;
-        }
-
-        String name = nameField.getText();
-        String department = departmentField.getText();
-
-        Student student = new Student(id, name, gpa, department);
-
-        boolean inserted = studentService.addStudent(student);
-
-        if(inserted){
-            students.add(student);
-
-            clearFields();
-
-            AlertHelper.showInfo(
-                    "Success",
-                    "Student Added",
-                    "The student has been added successfully.");
-        }
-        else{
-            AlertHelper.showError("Error","This ID is in use.","Student could not be added");
-        } */
+        SceneManager.dialogLoader(null, DialogMode.ADD, "/JavaFXexample/fxml/student-dialog.fxml", this::loadStudents);
 
     }
 
@@ -327,60 +231,10 @@ public class StudentController {
 
     @FXML 
     private void updateStudent(){
-        /* Student selected = studentTable.getSelectionModel().getSelectedItem();
-
-        if(selected == null){
-            return;
-        }
-
-        if (Validator.isEmpty(idField.getText())
-                || Validator.isEmpty(gpaField.getText())
-                || Validator.isEmpty(nameField.getText())
-                || Validator.isEmpty(departmentField.getText())) {
-            AlertHelper.showWarning(
-                "Warning", 
-                "Missing Information", 
-                "Please fill all fields");
-            return;
-        }
-
-        if (!Validator.isInteger(idField.getText())) {
-            AlertHelper.showWarning("Input Warning", "Invalid ID", "ID must be an integer.");
-            return;
-        }
-
-        if (!Validator.isDouble(gpaField.getText())) {
-            AlertHelper.showWarning("Input Warning", "Invalid GPA", "GPA must be numeric.");
-            return;
-        }
-
-        int id = Integer.parseInt(idField.getText());
-        Double gpa = Double.parseDouble(gpaField.getText());
-
-        if (!Validator.isValidGPA(gpa)) {
-            AlertHelper.showWarning("Input Warning", "Invalid GPA", "GPA must be between 0 and 4.");
-            return;
-        }
-
-        String name = nameField.getText();
-        String department = departmentField.getText();
-
-        Student updatedStudent = new Student(id, name, gpa, department);
-
-        if (AlertHelper.showConfirmation("Update Student", "Update Confirmation", "Are you sure?")) {
-            studentService.updateStudent(selected.getId(),updatedStudent);
-
-            selected.setId(id);
-            selected.setName(name);
-            selected.setDepartment(department);
-            selected.setGpa(gpa);
-
-            clearFields();
-        } */
 
     }
 
-    private void loadStudents(){
+    public void loadStudents(){
         students.setAll(
             studentService.getStudents()
         );
@@ -409,22 +263,6 @@ public class StudentController {
 
     @FXML
     private void returnDashboard(ActionEvent event){
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/JavaFXexample/fxml/dashboard.fxml"));
-
-            Parent root = loader.load();
-
-            Scene scene = new Scene(root);
-
-            scene.getStylesheets().add(getClass().getResource("/JavaFXexample/css/style.css").toExternalForm());
-
-            Stage stage = (Stage)((javafx.scene.Node)event.getSource()).getScene().getWindow();
-
-            stage.setScene(scene);
-
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        SceneManager.FXMLloader(event, "/JavaFXexample/fxml/dashboard.fxml", "/JavaFXexample/css/style.css",true);
     }
 }

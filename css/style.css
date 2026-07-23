@@ -1,61 +1,121 @@
-.root
-{
+.root {
     -fx-background-color:
-        linear-gradient(
-            to bottom right,
+        linear-gradient(to bottom right,
             #1f2937,
-            #4b5563
-        );
+            #4b5563);
 }
 
-.card
-{
+.card {
     -fx-background-color: white;
     -fx-spacing: 15;
     -fx-padding: 30;
-    -fx-background-radius: 20;
     -fx-effect:
-        dropshadow(
-            gaussian,
-            rgba(0,0,0,0.3),
+        dropshadow(gaussian,
+            rgba(0, 0, 0, 0.3),
             15,
             0,
             0,
-            5
-        );
+            5);
 }
 
-.title
-{
-    -fx-font-size: 28px;
-    -fx-font-weight: bold;
+.logo {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 10, 0, 0, 4);
+}
+
+.title {
+    -fx-font-size: 22px;
     -fx-padding: 15;
+    -fx-font-family: "Segoe UI", Hevetica, Arial, sans-serif;
+    -fx-font-weight: bold;
+
 }
 
-.form-row 
-{
-    -fx-spacing: 10;
+.form {
+    -fx-spacing: 12px;
 }
 
-.login-button
-{
+.field {
+    -fx-padding: 10;
+    -fx-background-radius: 10;
+    -fx-background-color: rgba(227, 227, 227, 0.659);
+}
+
+.label {
+    -fx-padding: 5;
+}
+
+.login-button {
     -fx-text-fill: white;
-    -fx-padding: 10 20;
     -fx-background-color: #3b82f6;
     -fx-background-radius: 10;
+    -fx-font-size: 15px;
+
 }
 
-.login-button:hover
-{
+.login-button:hover {
     -fx-background-color: #2563eb;
 }
 
-.succsess
+.check-box
 {
+    -fx-font-family: "Segoe UI", Hevetica, Arial, sans-serif;
+    -fx-font-size: 13px;
+    -fx-text-fill: #555555;
+    -fx-cursor: hand;
+}
+
+.check-box > .box {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #dcdfe6;
+    -fx-border-width: 1.5px;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-padding: 3px;
+}
+
+.check-box:hover > .box {
+    -fx-border-color: #409eff;
+}
+
+.check-box:selected > .box {
+    -fx-background-color: #409eff;
+    -fx-border-color: #409eff;
+}
+
+.check-box > .box > .mark {
+    -fx-background-color: transparent;
+    -fx-shape: "M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z";
+}
+
+.check-box:selected > .box > .mark {
+    -fx-background-color: #ffffff;
+}
+
+.check-box:focused > .box {
+    -fx-background-insets: 0;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+.succsess {
     -fx-text-fill: green;
 }
 
-.error
-{
+.error {
     -fx-text-fill: red;
+}
+
+.togglepassword-button {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+}
+
+.left-panel {
+    -fx-background-image: url('/JavaFXexample/images/school.png');
+
+    -fx-background-repeat: no-repeat;
+    
+    -fx-background-size: cover;
+    
+    -fx-background-position: center center;
 }
