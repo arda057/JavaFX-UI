@@ -119,3 +119,22 @@
     
     -fx-background-position: center center;
 }
+
+.back-button
+{
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+}
+
+.register-button
+{
+    -fx-text-fill: white;
+    -fx-background-color: #1f232ac8;
+    -fx-background-radius: 10;
+    -fx-font-size: 15px;
+}
+
+.register-button:hover
+{
+    -fx-background-color: #1f232ad5;
+}

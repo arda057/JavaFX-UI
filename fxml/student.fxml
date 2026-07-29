@@ -12,7 +12,7 @@
    <children>
       <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="card">
          <children>
-            <TableView fx:id="studentTable" prefHeight="200.0" prefWidth="200.0">
+            <TableView fx:id="studentTable" prefHeight="300.0" prefWidth="200.0">
               <columns>
                 <TableColumn fx:id="idColumn" prefWidth="75.0" text="ID" />
                 <TableColumn fx:id="nameColumn" prefWidth="75.0" text="Name" />

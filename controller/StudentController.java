@@ -108,7 +108,7 @@ public class StudentController {
                                 .getItems()
                                 .get(getIndex());
 
-                    SceneManager.dialogLoader(student, DialogMode.EDIT, "/JavaFXexample/fxml/student-dialog.fxml", StudentController.this::loadStudents);
+                    SceneManager.dialogLoader(student, DialogMode.EDIT, "/JavaFXexample/fxml/student-dialog.fxml", "/JavaFXexample/css/dialog-style.css",StudentController.this::loadStudents);
 
                 });
             }
@@ -187,8 +187,25 @@ public class StudentController {
                     return;
                 }
 
-               SceneManager.dialogLoader(student, DialogMode.EDIT, "/JavaFXexample/fxml/student-dialog.fxml", this::loadStudents);
+               SceneManager.dialogLoader(student, DialogMode.EDIT, "/JavaFXexample/fxml/student-dialog.fxml", "/JavaFXexample/css/dialog-style.css",this::loadStudents);
 
+            });
+
+            deleteItem.setOnAction(event -> {
+                Student student = row.getItem();
+
+                if (student == null) {
+                    return;
+                }
+
+                if(AlertHelper.showConfirmation(
+                "Delete Student",
+                "Delete Confirmation",
+                "Are you sure?")){
+                    studentService.deleteStudent(student.getId());
+                    loadStudents();
+                }
+                
             });
 
             row.setContextMenu(menu);
@@ -203,7 +220,7 @@ public class StudentController {
 
     @FXML
     private void addStudent() {
-        SceneManager.dialogLoader(null, DialogMode.ADD, "/JavaFXexample/fxml/student-dialog.fxml", this::loadStudents);
+        SceneManager.dialogLoader(null, DialogMode.ADD, "/JavaFXexample/fxml/student-dialog.fxml","/JavaFXexample/css/dialog-style.css", this::loadStudents);
 
     }
 
@@ -221,10 +238,8 @@ public class StudentController {
                 "Delete Confirmation",
                 "Are you sure?")) {
             studentService.deleteStudent(selected.getId());
+            students.remove(selected);
         }
-        
-        students.remove(selected);
-
         clearFields();
 
     }

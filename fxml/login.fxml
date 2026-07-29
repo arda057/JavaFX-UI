@@ -13,6 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
 
 <StackPane maxHeight="600.0" maxWidth="800.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="JavaFXexample.controller.LoginController">
    <children>
@@ -67,13 +68,18 @@
                               <Insets top="10.0" />
                            </VBox.margin>
                         </CheckBox>
-                        <VBox alignment="CENTER" minHeight="70.0">
+                        <VBox alignment="CENTER" minHeight="70.0" spacing="20.0">
                            <children>
                               <Button fx:id="loginButton" alignment="CENTER" minHeight="35.0" minWidth="300.0" mnemonicParsing="false" onAction="#login" styleClass="login-button" text="Login">
                                  <opaqueInsets>
                                     <Insets />
                                  </opaqueInsets>
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
                               </Button>
+                              <Line endX="150.0" startX="-150.0" />
+                              <Button minHeight="35.0" minWidth="300.0" mnemonicParsing="false" onAction="#toRegister" styleClass="register-button" text="Register" />
                            </children>
                         </VBox>
                      </children>

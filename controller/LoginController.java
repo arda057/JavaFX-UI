@@ -1,6 +1,7 @@
 package JavaFXexample.controller;
 
 import javafx.fxml.FXML;
+import JavaFXexample.service.UserService;
 import JavaFXexample.util.SceneManager;
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
@@ -13,7 +14,6 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
 import javafx.util.Duration;
 
 public class LoginController {
@@ -33,6 +33,8 @@ public class LoginController {
     private TextField visiblePasswordField;
 
     private FadeTransition fadeOut;
+
+    UserService userService = new UserService();
 
     @FXML
     public void initialize() {
@@ -57,11 +59,11 @@ public class LoginController {
                     scale.setToX(1.0);
                     scale.setToY(1.0);
 
-                    FadeTransition fade = new FadeTransition(Duration.millis(180), mark);
-                    fade.setFromValue(0.0);
-                    fade.setToValue(1.0);
+                    fadeOut = new FadeTransition(Duration.millis(180), mark);
+                    fadeOut.setFromValue(0.0);
+                    fadeOut.setToValue(1.0);
 
-                    ParallelTransition anim = new ParallelTransition(scale, fade);
+                    ParallelTransition anim = new ParallelTransition(scale, fadeOut);
                     anim.play();
 
                 } else { 
@@ -72,12 +74,13 @@ public class LoginController {
                 }
             }
         });
+
     }
 
     @FXML
     private void login(ActionEvent event) {
 
-        if ((usernameField.getText().equals("admin")) && (passwordField.getText().equals("1234"))) {
+        if (userService.authenticate(usernameField.getText(), passwordField.getText())) {
             resultLabel.setText("Login successful");
             resultLabel.getStyleClass().setAll("label", "succsess");
 
@@ -96,7 +99,7 @@ public class LoginController {
                 fadeOut.stop();
             }
 
-            FadeTransition fadeOut = new FadeTransition(Duration.seconds(2), resultLabel);
+            fadeOut = new FadeTransition(Duration.seconds(2), resultLabel);
 
             fadeOut.setFromValue(0.8);
             fadeOut.setToValue(0.0);
@@ -142,5 +145,10 @@ public class LoginController {
             visiblePasswordField.setVisible(false);
 
         }
+    }
+
+    @FXML
+    private void toRegister(ActionEvent event){
+        SceneManager.FXMLloader(event, "/JavaFXexample/fxml/register.fxml", "/JavaFXexample/css/style.css", false);
     }
 }
