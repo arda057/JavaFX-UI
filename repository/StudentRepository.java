@@ -1,4 +1,4 @@
-package JavaFXexample.repistory;
+package JavaFXexample.repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -38,11 +38,11 @@ public class StudentRepository {
             }
 
             e.printStackTrace();
-            return true;
+            return false;
         }
     }
 
-    public void updateStudent(int id, Student student){
+    public boolean updateStudent(int id, Student student){
         String sql = 
                 """
                 UPDATE students
@@ -66,9 +66,14 @@ public class StudentRepository {
 
             pstmt.executeUpdate();
 
-            System.out.println("Student uploaded!");
-        } catch (Exception e) {
+            return true;
+        } catch (SQLException e) {
+            if (e.getErrorCode() == 19) {
+                return false;
+            }
+
             e.printStackTrace();
+            return false;
         }
     }
 

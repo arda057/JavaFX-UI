@@ -3,6 +3,7 @@ package JavaFXexample;
 import java.sql.Connection;
 
 import JavaFXexample.database.DatabaseManager;
+import JavaFXexample.service.UserService;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -39,6 +40,9 @@ public class Main extends Application
             e.printStackTrace();
         }
         DatabaseManager.createTable();
+        DatabaseManager.createUsersTable();
+
+        new UserService().register("admin", "1234");
     }
 
     public static void main(String[] args)

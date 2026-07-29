@@ -3,7 +3,7 @@ package JavaFXexample.service;
 import java.util.List;
 
 import JavaFXexample.model.Student;
-import JavaFXexample.repistory.StudentRepository;
+import JavaFXexample.repository.StudentRepository;
 
 public class StudentService {
     private final StudentRepository repository = new StudentRepository();
@@ -12,8 +12,8 @@ public class StudentService {
         return repository.insertStudent(student);
     }
 
-    public void updateStudent(int id,Student student){
-        repository.updateStudent(id, student);
+    public boolean updateStudent(int id,Student student){
+        return repository.updateStudent(id, student);
     }
 
     public void deleteStudent(int id){
