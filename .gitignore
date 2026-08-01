@@ -1,0 +1,21 @@
+# Maven build output
+target/
+
+# jpackage build output
+dist/
+
+# IDE and Editor settings
+.vscode/
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Runtime database and temporary files
+students.db
+test.sql
+
+# OS and Log files
+*.log
+.DS_Store
+Thumbs.db
