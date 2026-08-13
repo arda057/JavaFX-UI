@@ -12,7 +12,7 @@ public class StudentService {
         return repository.insertStudent(student);
     }
 
-    public boolean updateStudent(int id,Student student){
+    public boolean updateStudent(int id, Student student){
         return repository.updateStudent(id, student);
     }
 
@@ -22,5 +22,9 @@ public class StudentService {
 
     public List<Student> getStudents(){
         return repository.getStudents();
+    }
+
+    public boolean updateStudentPhoto(int id, byte[] photo){
+        return repository.updatePhoto(id, photo);
     }
 }

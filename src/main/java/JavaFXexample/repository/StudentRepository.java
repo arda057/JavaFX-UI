@@ -12,22 +12,20 @@ import JavaFXexample.database.DatabaseManager;
 import JavaFXexample.model.Student;
 
 public class StudentRepository {
-    public boolean insertStudent(Student student){
-        String sql = 
-                """
-                INSERT INTO students 
-                (id, name, gpa, department)
-                VALUES (?,?,?,?)
+    public boolean insertStudent(Student student) {
+        String sql = """
+                INSERT INTO students
+                (id, name, gpa, department, photo)
+                VALUES (?,?,?,?,?)
                 """;
         try (
-            Connection conn = DatabaseManager.connect();
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-        )
-        {
+                Connection conn = DatabaseManager.connect();
+                PreparedStatement pstmt = conn.prepareStatement(sql);) {
             pstmt.setInt(1, student.getId());
             pstmt.setString(2, student.getName());
             pstmt.setDouble(3, student.getGpa());
             pstmt.setString(4, student.getDepartment());
+            pstmt.setBytes(5, student.getPhoto());
 
             pstmt.executeUpdate();
 
@@ -42,9 +40,8 @@ public class StudentRepository {
         }
     }
 
-    public boolean updateStudent(int id, Student student){
-        String sql = 
-                """
+    public boolean updateStudent(int id, Student student) {
+        String sql = """
                 UPDATE students
                 SET id = ?,
                     name = ?,
@@ -54,10 +51,8 @@ public class StudentRepository {
                 """;
 
         try (
-            Connection conn = DatabaseManager.connect();
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-        ) 
-        {
+                Connection conn = DatabaseManager.connect();
+                PreparedStatement pstmt = conn.prepareStatement(sql);) {
             pstmt.setInt(1, student.getId());
             pstmt.setString(2, student.getName());
             pstmt.setDouble(3, student.getGpa());
@@ -77,17 +72,14 @@ public class StudentRepository {
         }
     }
 
-    public void deleteStudent(int id){
-        String sql = 
-                """
-                DELETE FROM students 
+    public void deleteStudent(int id) {
+        String sql = """
+                DELETE FROM students
                 WHERE id = ?;
                 """;
         try (
-            Connection conn = DatabaseManager.connect();
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-        ) 
-        {
+                Connection conn = DatabaseManager.connect();
+                PreparedStatement pstmt = conn.prepareStatement(sql);) {
             pstmt.setInt(1, id);
 
             pstmt.executeUpdate();
@@ -98,23 +90,21 @@ public class StudentRepository {
         }
     }
 
-    public List<Student> getStudents(){
+    public List<Student> getStudents() {
         List<Student> students = new ArrayList<>();
         String sql = "SELECT * FROM students";
 
         try (
-            Connection conn = DatabaseManager.connect();
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
-        )
-        {
-            while(rs.next()){
+                Connection conn = DatabaseManager.connect();
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql);) {
+            while (rs.next()) {
                 Student student = new Student(
-                    rs.getInt("id"), 
-                    rs.getString("name"), 
-                    rs.getDouble("gpa"), 
-                    rs.getString("department")
-                );
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getDouble("gpa"),
+                        rs.getString("department"),
+                        rs.getBytes("photo"));
                 students.add(student);
             }
         } catch (Exception e) {
@@ -122,5 +112,24 @@ public class StudentRepository {
         }
         return students;
     }
+
+    public boolean updatePhoto(int userId, byte[] photo) {
+        String sql = "UPDATE students SET photo = ? WHERE id = ?";
+
+        try (
+                Connection conn = DatabaseManager.connect();
+                PreparedStatement ptsmt = conn.prepareStatement(sql);) {
+            ptsmt.setBytes(1, photo);
+            ptsmt.setInt(2, userId);
+
+            ptsmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    
 
 }

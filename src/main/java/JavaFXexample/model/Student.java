@@ -12,12 +12,14 @@ public class Student {
     private final StringProperty name = new SimpleStringProperty();
     private final DoubleProperty gpa = new SimpleDoubleProperty();
     private final StringProperty department = new SimpleStringProperty();
+    private byte[] photo;
 
-    public Student(int id, String name, double gpa, String department) {
+    public Student(int id, String name, double gpa, String department, byte[] photo) {
         this.id.set(id);
         this.name.set(name);
         this.gpa.set(gpa);
         this.department.set(department);
+        this.photo = photo;
     }
 
     public IntegerProperty idProperty() {
@@ -52,6 +54,10 @@ public class Student {
         return department.get();
     }
 
+    public byte[] getPhoto() {
+        return photo;
+    }
+
     public void setId(int value) {
         id.set(value);
     }
@@ -66,6 +72,10 @@ public class Student {
 
     public void setDepartment(String value) {
         department.set(value);
+    }
+
+    public void setPhoto(byte[] photo){
+        this.photo = photo;
     }
 
 }

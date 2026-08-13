@@ -1,5 +1,6 @@
 package JavaFXexample.util;
 
+import JavaFXexample.controller.StudentDetailsController;
 import JavaFXexample.controller.StudentDialogController;
 import JavaFXexample.model.DialogMode;
 import JavaFXexample.model.Student;
@@ -9,6 +10,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -19,7 +22,6 @@ public class SceneManager {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Parent currentRoot = stage.getScene().getRoot();
 
-        // 1. Mevcut ekranı yavaşça saydamlaştır (Fade Out)
         FadeTransition fadeOut = new FadeTransition(Duration.millis(250), currentRoot);
         fadeOut.setFromValue(1.0);
         fadeOut.setToValue(0.0);
@@ -31,20 +33,17 @@ public class SceneManager {
                 double oldX = stage.getX();
                 double oldY = stage.getY();
 
-                // 2. Yeni FXML ve CSS'i yükle
                 FXMLLoader loader = new FXMLLoader(SceneManager.class.getResource(fxmlPath));
                 Parent newRoot = loader.load();
 
                 Scene scene = new Scene(newRoot);
                 scene.getStylesheets().add(SceneManager.class.getResource(cssPath).toExternalForm());
 
-                // 3. Yeni sayfayı başlangıçta tamamen saydam yap
                 newRoot.setOpacity(0.0);
 
-                // 4. Sahneyi değiştir, boyutlandır ve ortala
                 stage.setScene(scene);
                 stage.setResizable(resizable);
-                stage.sizeToScene();     // Yeni FXML boyutuna uyarla
+                stage.sizeToScene();     
 
                 double newWidth = stage.getWidth();
                 double newHeight = stage.getHeight();
@@ -56,7 +55,6 @@ public class SceneManager {
                 stage.setY(newY);
                 stage.show();
 
-                // 5. Yeni ekranı yavaşça görünür yap (Fade In)
                 FadeTransition fadeIn = new FadeTransition(Duration.millis(250), newRoot);
                 fadeIn.setFromValue(0.0);
                 fadeIn.setToValue(1.0);
@@ -103,9 +101,40 @@ public class SceneManager {
                 dialogStage.setTitle("Add Student");
             }
 
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+
             dialogStage.setResizable(false);
 
-            dialogStage.show();
+            dialogStage.showAndWait();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void detailsLoader(Student student, String fxmlPath, String cssPath) {
+        try {
+            FXMLLoader loader = new FXMLLoader(SceneManager.class.getResource(fxmlPath));
+
+            Parent root = loader.load();
+
+            StudentDetailsController controller = loader.getController();
+
+            if (student != null) {
+                controller.setStudent(student);
+            }
+
+            Stage dialogStage = new Stage();
+
+            Scene scene = new Scene(root);
+
+            scene.getStylesheets().add(SceneManager.class.getResource(cssPath).toExternalForm());
+
+            dialogStage.setScene(scene);
+            dialogStage.setTitle("Student Details");
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+            dialogStage.setResizable(false);
+            dialogStage.showAndWait();
 
         } catch (Exception e) {
             e.printStackTrace();

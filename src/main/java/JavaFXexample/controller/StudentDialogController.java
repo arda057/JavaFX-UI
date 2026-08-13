@@ -84,7 +84,7 @@ public class StudentDialogController {
         String name = nameField.getText();
         String department = departmentField.getText();
 
-        Student updatedStudent = new Student(id, name, gpa, department);
+        Student updatedStudent = new Student(id, name, gpa, department, null);
 
         if (mode == DialogMode.ADD) {
             boolean inserted = studentService.addStudent(updatedStudent);
