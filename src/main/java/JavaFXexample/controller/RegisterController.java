@@ -46,6 +46,10 @@ public class RegisterController {
 
         confirmVisiblePasswordField.textProperty().bindBidirectional(
                 confirmPasswordField.textProperty());
+                
+        resultLabel.managedProperty().bind(
+            resultLabel.visibleProperty()
+        );
     }
 
     @FXML
