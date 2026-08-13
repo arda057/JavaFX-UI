@@ -4,41 +4,45 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="300.0" spacing="10.0" styleClass="a" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="JavaFXexample.controller.StudentDialogController">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="260.0" prefWidth="300.0" spacing="10.0" styleClass="a" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="JavaFXexample.controller.StudentDialogController">
    <children>
       <Label fx:id="dialogLabel" styleClass="title" />
-      <HBox alignment="CENTER_LEFT" spacing="57.0">
+      <GridPane hgap="10.0" vgap="10.0">
+         <columnConstraints>
+            <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
+         </rowConstraints>
          <children>
             <Label text="ID" />
-            <TextField fx:id="idField" promptText="ID" />
+            <TextField fx:id="idField" promptText="ID" GridPane.columnIndex="1" />
+            <Label text="Name" GridPane.rowIndex="1" />
+            <TextField fx:id="nameField" promptText="Name" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label text="GPA" GridPane.rowIndex="2" />
+            <TextField fx:id="gpaField" promptText="GPA" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label text="Department" GridPane.rowIndex="3" />
+            <TextField fx:id="departmentField" promptText="Department" GridPane.columnIndex="1" GridPane.rowIndex="3" />
          </children>
-      </HBox>
-      <HBox alignment="CENTER_LEFT" spacing="37.0">
-         <children>
-            <Label text="Name" />
-            <TextField fx:id="nameField" promptText="Name" />
-         </children>
-      </HBox>
-      <HBox alignment="CENTER_LEFT" spacing="46.0">
-         <children>
-            <Label text="GPA" />
-            <TextField fx:id="gpaField" promptText="GPA" />
-         </children>
-      </HBox>
-      <HBox alignment="CENTER_LEFT" spacing="5.0">
-         <children>
-            <Label text="Department" />
-            <TextField fx:id="departmentField" promptText="Department" />
-         </children>
-      </HBox>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+      </GridPane>
+      <HBox alignment="CENTER" spacing="20.0">
          <children>
             <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveStudent" text="Save" />
             <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#closeDialog" text="Cancel" />
          </children>
+         <VBox.margin>
+            <Insets top="10.0" />
+         </VBox.margin>
       </HBox>
    </children>
    <padding>

@@ -26,15 +26,15 @@ public class StudentController {
     @FXML
     private TableView<Student> studentTable;
     @FXML
-    private TableColumn<Student,Integer> idColumn;
+    private TableColumn<Student, Integer> idColumn;
     @FXML
-    private TableColumn<Student,String> nameColumn;
+    private TableColumn<Student, String> nameColumn;
     @FXML
-    private TableColumn<Student,Double> gpaColumn;
+    private TableColumn<Student, Double> gpaColumn;
     @FXML
-    private TableColumn<Student,String> departmentColumn;
+    private TableColumn<Student, String> departmentColumn;
     @FXML
-    private TableColumn<Student,Void> actionColumn;
+    private TableColumn<Student, Void> actionColumn;
     @FXML
     private TextField idField;
     @FXML
@@ -53,12 +53,11 @@ public class StudentController {
     private final FilteredList<Student> filteredStudents = new FilteredList<>(students, p -> true);
 
     private final SortedList<Student> sortedStudents = new SortedList<>(filteredStudents);
-    
+
     private StudentService studentService = new StudentService();
 
     @FXML
-    public void initialize()
-    {
+    public void initialize() {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
 
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -105,10 +104,11 @@ public class StudentController {
             {
                 editButton.setOnAction(event -> {
                     Student student = getTableView()
-                                .getItems()
-                                .get(getIndex());
+                            .getItems()
+                            .get(getIndex());
 
-                    SceneManager.dialogLoader(student, DialogMode.EDIT, "/JavaFXexample/fxml/student-dialog.fxml", "/JavaFXexample/css/dialog-style.css",StudentController.this::loadStudents);
+                    SceneManager.dialogLoader(student, DialogMode.EDIT, "/JavaFXexample/fxml/student-dialog.fxml",
+                            "/JavaFXexample/css/dialog-style.css", StudentController.this::loadStudents);
 
                 });
             }
@@ -131,40 +131,17 @@ public class StudentController {
         });
 
         students.setAll(
-            studentService.getStudents()
-        );
+                studentService.getStudents());
 
-        searchField.textProperty().addListener(
-                (observable, oldValue, newValue) -> {
-                    filteredStudents.setPredicate(student -> {
-                        if (newValue == null || newValue.isBlank()) {
-                            return true;
-                        }
+        studentTable.getColumns().forEach(column -> column.setReorderable(false));
 
-                        String keyword = newValue.toLowerCase();
-
-                        return student.getName().toLowerCase().contains(keyword)
-                                ||
-
-                                student.getDepartment()
-                                        .toLowerCase()
-                                        .contains(keyword)
-
-                                ||
-
-                                String.valueOf(student.getId())
-                                        .contains(keyword)
-
-                                ||
-
-                                String.valueOf(student.getGpa())
-                                        .contains(keyword);
-                    });
-                });
+        idField.textProperty().addListener((obs, oldValue, newValue) -> updateFilter());
+        gpaField.textProperty().addListener((obs, oldVal, newVal) -> updateFilter());
+        nameField.textProperty().addListener((obs, oldVal, newVal) -> updateFilter());
+        departmentField.textProperty().addListener((obs, oldVal, newVal) -> updateFilter());
 
         sortedStudents.comparatorProperty().bind(
-            studentTable.comparatorProperty()
-        );
+                studentTable.comparatorProperty());
         studentTable.setItems(sortedStudents);
 
         studentTable.setRowFactory(tv -> {
@@ -187,7 +164,8 @@ public class StudentController {
                     return;
                 }
 
-               SceneManager.dialogLoader(student, DialogMode.EDIT, "/JavaFXexample/fxml/student-dialog.fxml", "/JavaFXexample/css/dialog-style.css",this::loadStudents);
+                SceneManager.dialogLoader(student, DialogMode.EDIT, "/JavaFXexample/fxml/student-dialog.fxml",
+                        "/JavaFXexample/css/dialog-style.css", this::loadStudents);
 
             });
 
@@ -198,14 +176,24 @@ public class StudentController {
                     return;
                 }
 
-                if(AlertHelper.showConfirmation(
-                "Delete Student",
-                "Delete Confirmation",
-                "Are you sure?")){
+                if (AlertHelper.showConfirmation(
+                        "Delete Student",
+                        "Delete Confirmation",
+                        "Are you sure?")) {
                     studentService.deleteStudent(student.getId());
                     loadStudents();
                 }
-                
+
+            });
+
+            detailItem.setOnAction(event -> {
+                Student student = row.getItem();
+
+                if (student == null) {
+                    return;
+                }
+
+                SceneManager.detailsLoader(student, "/JavaFXexample/fxml/student-details.fxml", "/JavaFXexample/css/dialog-style.css");
             });
 
             row.setContextMenu(menu);
@@ -220,19 +208,19 @@ public class StudentController {
 
     @FXML
     private void addStudent() {
-        SceneManager.dialogLoader(null, DialogMode.ADD, "/JavaFXexample/fxml/student-dialog.fxml","/JavaFXexample/css/dialog-style.css", this::loadStudents);
+        SceneManager.dialogLoader(null, DialogMode.ADD, "/JavaFXexample/fxml/student-dialog.fxml",
+                "/JavaFXexample/css/dialog-style.css", this::loadStudents);
 
     }
 
     @FXML
-    private void deleteStudent(){
+    private void deleteStudent() {
         Student selected = studentTable.getSelectionModel().getSelectedItem();
 
-        if(selected == null)
-        {
+        if (selected == null) {
             return;
         }
-        
+
         if (AlertHelper.showConfirmation(
                 "Delete Student",
                 "Delete Confirmation",
@@ -240,19 +228,54 @@ public class StudentController {
             studentService.deleteStudent(selected.getId());
             students.remove(selected);
         }
-        clearFields();
+        clearSelection();
 
     }
 
-    @FXML 
-    private void updateStudent(){
+    @FXML
+    private void updateStudent() {
 
     }
 
-    public void loadStudents(){
+    public void loadStudents() {
         students.setAll(
-            studentService.getStudents()
-        );
+                studentService.getStudents());
+    }
+
+    private void updateFilter() {
+        filteredStudents.setPredicate(student -> {
+            String idText = idField.getText();
+            if (idText != null && !idText.isBlank()) {
+                if (!String.valueOf(student.getId()).toLowerCase().contains(idText.toLowerCase().trim())) {
+                    return false;
+                }
+            }
+
+            String gpaText = gpaField.getText();
+            if (gpaText != null && !gpaText.isBlank()) {
+                if (!String.valueOf(student.getGpa()).toLowerCase().contains(gpaText.toLowerCase().trim())) {
+                    return false;
+                }
+            }
+
+            String nameText = nameField.getText();
+            if (nameText != null && !nameText.isBlank()) {
+                if (student.getName() == null
+                        || !student.getName().toLowerCase().contains(nameText.toLowerCase().trim())) {
+                    return false;
+                }
+            }
+
+            String deptText = departmentField.getText();
+            if (deptText != null && !deptText.isBlank()) {
+                if (student.getDepartment() == null
+                        || !student.getDepartment().toLowerCase().contains(deptText.toLowerCase().trim())) {
+                    return false;
+                }
+            }
+
+            return true;
+        });
     }
 
     private void clearFields() {
@@ -268,8 +291,6 @@ public class StudentController {
         clearSelection();
         clearFields();
 
-        idField.requestFocus();
-
     }
 
     private void clearSelection() {
@@ -277,7 +298,7 @@ public class StudentController {
     }
 
     @FXML
-    private void returnDashboard(ActionEvent event){
-        SceneManager.FXMLloader(event, "/JavaFXexample/fxml/dashboard.fxml", "/JavaFXexample/css/style.css",true);
+    private void returnDashboard(ActionEvent event) {
+        SceneManager.FXMLloader(event, "/JavaFXexample/fxml/dashboard.fxml", "/JavaFXexample/css/style.css", true);
     }
 }
