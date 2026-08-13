@@ -1,8 +1,10 @@
 package JavaFXexample.controller;
 
 import javafx.fxml.FXML;
+import JavaFXexample.model.User;
 import JavaFXexample.service.UserService;
 import JavaFXexample.util.SceneManager;
+import JavaFXexample.util.Session;
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
 import javafx.animation.ScaleTransition;
@@ -52,7 +54,7 @@ public class LoginController {
             Node mark = rememberCheckBox.lookup(".mark");
 
             if (mark != null) {
-                if (newValue) { 
+                if (newValue) {
                     ScaleTransition scale = new ScaleTransition(Duration.millis(180), mark);
                     scale.setFromX(0);
                     scale.setFromY(0);
@@ -66,7 +68,7 @@ public class LoginController {
                     ParallelTransition anim = new ParallelTransition(scale, fadeOut);
                     anim.play();
 
-                } else { 
+                } else {
                     ScaleTransition scale = new ScaleTransition(Duration.millis(120), mark);
                     scale.setToX(0);
                     scale.setToY(0);
@@ -80,7 +82,10 @@ public class LoginController {
     @FXML
     private void login(ActionEvent event) {
 
-        if (userService.authenticate(usernameField.getText(), passwordField.getText())) {
+        User user = userService.login(usernameField.getText(), passwordField.getText());
+        if (user != null) {
+            Session.setCurrentUser(user);
+            
             resultLabel.setText("Login successful");
             resultLabel.getStyleClass().setAll("label", "succsess");
 
@@ -130,7 +135,7 @@ public class LoginController {
     @FXML
     private void togglePasswordVisibility() {
 
-        if(passwordField.getText().isEmpty()){
+        if (passwordField.getText().isEmpty()) {
             return;
         }
 
@@ -148,7 +153,7 @@ public class LoginController {
     }
 
     @FXML
-    private void toRegister(ActionEvent event){
+    private void toRegister(ActionEvent event) {
         SceneManager.FXMLloader(event, "/JavaFXexample/fxml/register.fxml", "/JavaFXexample/css/style.css", false);
     }
 }

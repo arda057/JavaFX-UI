@@ -26,4 +26,28 @@ public class UserService {
 
         return PasswordUtil.verifyPassword(password, user.getSalt(), user.getPassword_hash());
     }
+
+    public User login(String username, String password){
+        User user = userRepository.findByUsername(username);
+
+        if(user == null){
+            return null;
+        }
+
+        boolean valid = PasswordUtil.verifyPassword(password, user.getSalt(), user.getPassword_hash());
+
+        return valid ? user : null;
+    }
+
+    public boolean updatePhoto(int id, byte[] photo){
+        return userRepository.updatePhoto(id, photo);
+    }
+
+    public boolean deletePhoto(int id){
+        return userRepository.deletePhoto(id);
+    }
+
+
+
+
 }
