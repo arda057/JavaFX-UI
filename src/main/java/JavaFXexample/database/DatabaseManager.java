@@ -18,7 +18,8 @@ public class DatabaseManager {
                     id INTEGER PRIMARY KEY,
                     name TEXT NOT NULL,
                     gpa REAL,
-                    department TEXT
+                    department TEXT,
+                    photo BLOB
                 )
                 """;
 
@@ -40,7 +41,8 @@ public class DatabaseManager {
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     username TEXT NOT NULL UNIQUE,
                     password_hash TEXT NOT NULL,
-                    salt TEXT NOT NULL
+                    salt TEXT NOT NULL,
+                    photo BLOB
                 )
                 """;
         try (

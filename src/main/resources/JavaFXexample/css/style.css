@@ -7,8 +7,17 @@
 
 .card {
     -fx-background-color: white;
-    -fx-spacing: 15;
-    -fx-padding: 30;
+    -fx-effect:
+        dropshadow(gaussian,
+            rgba(0, 0, 0, 0.3),
+            15,
+            0,
+            0,
+            5);
+}
+
+.settings-card{
+    -fx-background-color: white;
     -fx-effect:
         dropshadow(gaussian,
             rgba(0, 0, 0, 0.3),
@@ -30,6 +39,20 @@
 
 }
 
+.button
+{
+    -fx-background-radius: 10px;
+    -fx-padding: 7px 15px;
+    -fx-background-color: #c9caca4a;
+    -fx-text-fill: black;
+
+}
+
+.button:hover
+{
+    -fx-background-color: #c9caca;
+}
+
 .form {
     -fx-spacing: 12px;
 }
@@ -41,7 +64,6 @@
 }
 
 .label {
-    -fx-padding: 5;
 }
 
 .login-button {
@@ -126,6 +148,11 @@
     -fx-cursor: hand;
 }
 
+.back-button:hover
+{
+    -fx-background-color: white;
+}
+
 .register-button
 {
     -fx-text-fill: white;
@@ -137,4 +164,96 @@
 .register-button:hover
 {
     -fx-background-color: #1f232ad5;
+}
+
+.settings-title 
+{
+    -fx-font-family: "Segoe UI", Hevetica, Arial, sans-serif;
+    -fx-font-weight: bold;
+    
+}
+
+.settings-textfield
+{
+    -fx-padding: 12px 16px;
+    -fx-background-radius: 10px;
+}
+
+.settings-text
+{
+    -fx-font-size: 12px;
+}
+
+.return-button:hover
+{
+    -fx-background-color: #154458;
+}
+
+.return-button
+{
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-text-fill: white;
+}
+
+.table-view {
+    -fx-background-color: transparent;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-font-size: 14px;
+}
+
+/* Tablo Başlık Alanı (Header) */
+.table-view .column-header-background {
+    -fx-background-color: #2c3e50; /* Koyu lacivert başlık arka planı */
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+    -fx-size: 45px; /* Başlık yüksekliği */
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white; /* Başlık yazı rengi */
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER-LEFT; /* Başlık metin hizalaması */
+}
+
+/* Tablo Satırları */
+.table-row-cell {
+    -fx-background-color: #ffffff;
+    -fx-cell-size: 35px; /* Satır yüksekliği */
+    -fx-border-color: transparent transparent #e0e0e0 transparent; /* Alt çizgi */
+}
+
+/* Çizgili (Zebra) Tablo Görünümü - Çift Numaralı Satırlar */
+.table-row-cell:odd {
+    -fx-background-color: #f9f9f9;
+}
+
+/* Fare ile Satır Üzerine Gelindiğinde (Hover) */
+.table-row-cell:hover {
+    -fx-background-color: #e8f4fe;
+}
+
+/* Satır Seçildiğinde (Selection) */
+.table-row-cell:selected {
+    -fx-background-color: #3498db;
+}
+
+.table-row-cell:selected .text {
+    -fx-fill: white; /* Seçili satırdaki yazı rengi */
+}
+
+/* Hücrelerin Genel Ayarları ve Metin Hizalaması */
+.table-cell {
+    -fx-text-fill: #333333;
+    -fx-alignment: CENTER-LEFT; /* Tüm hücreleri varsayılan olarak sola hizala */
+}
+
+.profile-picture{
+    -fx-border-radius: 50px;
+}
+
+.dashboard-button{
+    -fx-padding: 30px;
 }

@@ -50,12 +50,50 @@ public class UserRepository {
                             rs.getInt("id"),
                             rs.getString("username"),
                             rs.getString("password_hash"),
-                            rs.getString("salt"));
+                            rs.getString("salt"),
+                            rs.getBytes("photo")
+                        );
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public boolean updatePhoto(int id, byte[] photo) {
+        String sql = "UPDATE users SET photo = ? WHERE id = ?";
+
+        try (
+            Connection conn = DatabaseManager.connect();
+            PreparedStatement ptsmt = conn.prepareStatement(sql);
+        ){
+            ptsmt.setBytes(1, photo);
+            ptsmt.setInt(2, id);
+
+            ptsmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean deletePhoto(int id){
+        String sql = "UPDATE users SET photo = NULL WHERE id = ?";
+
+        try (
+            Connection conn = DatabaseManager.connect();
+            PreparedStatement ptsmt = conn.prepareStatement(sql);
+        ){ 
+            ptsmt.setInt(1, id);
+
+            ptsmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
     }
 }

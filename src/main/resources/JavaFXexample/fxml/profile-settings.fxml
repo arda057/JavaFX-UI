@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="JavaFXexample.controller.ProfileSettingsController">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="30.0" prefWidth="100.0" />
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="70.0" prefWidth="100.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <VBox alignment="TOP_CENTER" spacing="10.0" styleClass="settings-card" GridPane.columnIndex="1">
+         <children>
+            <VBox spacing="20.0">
+               <children>
+                  <Label styleClass="settings-title" text="User Information">
+                     <font>
+                        <Font size="31.0" />
+                     </font>
+                  </Label>
+                  <HBox alignment="CENTER_LEFT" spacing="20.0">
+                     <children>
+                        <Circle fx:id="profileCircle" fill="#1f93ff3f" radius="50.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+                        <Button mnemonicParsing="false" onAction="#changePhoto" text="Upload New" />
+                        <Button mnemonicParsing="false" onAction="#deletePhoto" text="Delete " />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" spacing="12.0">
+                     <children>
+                        <Label styleClass="settings-text" text="Username:" />
+                        <TextField fx:id="usernameField" prefWidth="250.0" styleClass="settings-textfield" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" spacing="15.0">
+                     <children>
+                        <Label styleClass="settings-text" text="Password:" />
+                        <PasswordField fx:id="passwordField" prefWidth="250.0" styleClass="settings-textfield" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" spacing="54.0">
+                     <children>
+                        <Label styleClass="settings-text" text="Id:" />
+                        <TextField fx:id="idField" prefWidth="250.0" styleClass="settings-textfield" />
+                     </children>
+                  </HBox>
+               </children>
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
+            </VBox>
+            <Button mnemonicParsing="false" onAction="#returnDashboard" text="Save" />
+         </children>
+      </VBox>
+      <VBox alignment="TOP_CENTER">
+         <children>
+            <HBox>
+               <children>
+                  <Button mnemonicParsing="false" onAction="#returnDashboard" styleClass="return-button" text="← Return" />
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </HBox>
+            <Label text="Profile Settings" textFill="WHITE">
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/profile-settings-icon-user-setting-icon-avatar-account-icon-vector-removebg-preview.png" />
+               </image>
+            </ImageView>
+         </children>
+      </VBox>
+   </children>
+</GridPane>
