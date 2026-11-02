@@ -1,33 +1,245 @@
+/* ==========================================================
+   MODERN JAVAFX DIALOG STYLESHEET
+   Project: Student Management System
+   ========================================================== */
+
 .root {
-    -fx-background-color:
-        linear-gradient(to bottom right,
-            #0f2027, #203a43, #2c5364);
+    -fx-font-family: "Segoe UI", "Inter", -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+    -fx-font-size: 13px;
+    -fx-background-color: linear-gradient(to bottom right, #0f172a, #1e293b, #334155);
 }
 
-.label
-{
-    -fx-text-fill: white;
+.dialog-card {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 16px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.35), 24, 0, 0, 8);
+    -fx-padding: 24px;
 }
 
-.button
-{
-    -fx-background-radius: 10px;
-    -fx-padding: 7px 15px;
-    -fx-background-color: #2c5364;
-    -fx-text-fill: white;
-    -fx-scale-x: 1;
-    -fx-scale-y: 1;
-
+.title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0f172a;
+    -fx-padding: 0 0 10px 0;
 }
 
-.button:hover
-{
-    -fx-background-color: #154458;
-    -fx-scale-x: 1.1;
-    -fx-scale-y: 1.1;
+.field-label {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #475569;
 }
 
-.title
-{
-    -fx-font-size: 18px;
+.text-field {
+    -fx-background-color: #f8fafc;
+    -fx-background-radius: 8px;
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 1.5px;
+    -fx-border-radius: 8px;
+    -fx-padding: 8px 12px;
+    -fx-font-size: 13px;
+    -fx-text-fill: #0f172a;
+}
+
+.text-field:focused {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #3b82f6;
+    -fx-effect: dropshadow(gaussian, rgba(59, 130, 246, 0.25), 6, 0, 0, 0);
+}
+
+.btn-primary, #saveButton {
+    -fx-background-color: linear-gradient(to right, #2563eb, #3b82f6);
+    -fx-background-radius: 8px;
+    -fx-border-color: transparent;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 20px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(37, 99, 235, 0.3), 8, 0, 0, 2);
+}
+
+.btn-primary:hover, #saveButton:hover {
+    -fx-background-color: linear-gradient(to right, #1d4ed8, #2563eb);
+}
+
+.btn-secondary, #cancelButton {
+    -fx-background-color: #f1f5f9;
+    -fx-background-radius: 8px;
+    -fx-border-color: #cbd5e1;
+    -fx-border-width: 1px;
+    -fx-border-radius: 8px;
+    -fx-text-fill: #475569;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 18px;
+    -fx-cursor: hand;
+}
+
+.btn-secondary:hover, #cancelButton:hover {
+    -fx-background-color: #e2e8f0;
+}
+
+.detail-label-header {
+    -fx-font-weight: bold;
+    -fx-text-fill: #64748b;
+    -fx-font-size: 12px;
+}
+
+.detail-label-value {
+    -fx-font-weight: bold;
+    -fx-text-fill: #0f172a;
+    -fx-font-size: 14px;
+}
+
+.grid-detail-row {
+    -fx-background-color: #f8fafc;
+    -fx-background-radius: 8px;
+    -fx-padding: 8px 12px;
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 1px;
+    -fx-border-radius: 8px;
+}
+
+/* ==========================================================
+   WEEKLY COURSE SCHEDULE TIMETABLE STYLES
+   ========================================================== */
+
+.schedule-header-cell {
+    -fx-background-color: #f1f5f9;
+    -fx-background-radius: 8px;
+    -fx-border-color: #cbd5e1;
+    -fx-border-width: 1px;
+    -fx-border-radius: 8px;
+    -fx-padding: 8px 12px;
+    -fx-alignment: CENTER;
+}
+
+.schedule-header-day {
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-text-fill: #1e293b;
+}
+
+.schedule-header-sub {
+    -fx-font-size: 10px;
+    -fx-text-fill: #64748b;
+}
+
+.schedule-time-cell {
+    -fx-background-color: #f8fafc;
+    -fx-background-radius: 8px;
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 1px;
+    -fx-border-radius: 8px;
+    -fx-padding: 8px 10px;
+    -fx-alignment: CENTER_LEFT;
+}
+
+.schedule-time-label {
+    -fx-font-weight: bold;
+    -fx-font-size: 11px;
+    -fx-text-fill: #334155;
+}
+
+.schedule-period-label {
+    -fx-font-size: 10px;
+    -fx-text-fill: #94a3b8;
+}
+
+.schedule-slot {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 8px;
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 1px;
+    -fx-border-radius: 8px;
+    -fx-padding: 6px 8px;
+    -fx-alignment: CENTER;
+}
+
+.schedule-slot:hover {
+    -fx-background-color: #f8fafc;
+    -fx-border-color: #93c5fd;
+    -fx-cursor: hand;
+}
+
+.schedule-slot-empty {
+    -fx-font-size: 11px;
+    -fx-text-fill: #cbd5e1;
+    -fx-font-style: italic;
+}
+
+.schedule-slot-break {
+    -fx-background-color: #f1f5f9;
+    -fx-background-radius: 8px;
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 1px;
+    -fx-border-radius: 8px;
+    -fx-padding: 4px;
+    -fx-alignment: CENTER;
+}
+
+.schedule-course-card {
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-padding: 6px 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.06), 6, 0, 0, 2);
+}
+
+.schedule-course-blue {
+    -fx-background-color: linear-gradient(to right, #eff6ff, #dbeafe);
+    -fx-border-color: #3b82f6;
+    -fx-border-width: 0 0 0 4px;
+}
+
+.schedule-course-emerald {
+    -fx-background-color: linear-gradient(to right, #ecfdf5, #d1fae5);
+    -fx-border-color: #10b981;
+    -fx-border-width: 0 0 0 4px;
+}
+
+.schedule-course-amber {
+    -fx-background-color: linear-gradient(to right, #fffbeb, #fef3c7);
+    -fx-border-color: #f59e0b;
+    -fx-border-width: 0 0 0 4px;
+}
+
+.schedule-course-purple {
+    -fx-background-color: linear-gradient(to right, #faf5ff, #f3e8ff);
+    -fx-border-color: #8b5cf6;
+    -fx-border-width: 0 0 0 4px;
+}
+
+.schedule-course-code {
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-text-fill: #0f172a;
+}
+
+.schedule-course-name {
+    -fx-font-size: 11px;
+    -fx-text-fill: #334155;
+}
+
+.schedule-course-room {
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #64748b;
+}
+
+.schedule-pill {
+    -fx-background-color: #e0f2fe;
+    -fx-background-radius: 12px;
+    -fx-padding: 3px 10px;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0284c7;
+}
+
+.schedule-pill-term {
+    -fx-background-color: #f3e8ff;
+    -fx-background-radius: 12px;
+    -fx-padding: 3px 10px;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #7e22ce;
 }

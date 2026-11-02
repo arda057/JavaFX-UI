@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="650.0" minWidth="940.0" prefHeight="720.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="JavaFXexample.controller.CourseScheduleController">
+   <padding>
+      <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+   </padding>
+   <children>
+      <VBox spacing="14.0" styleClass="dialog-card">
+         <children>
+            <!-- Header Toolbar & Student Profile -->
+            <HBox alignment="CENTER_LEFT" spacing="16.0">
+               <children>
+                  <ImageView fx:id="photo" fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true" styleClass="profile-picture" />
+                  <VBox alignment="CENTER_LEFT" spacing="3.0">
+                     <children>
+                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                           <children>
+                              <Label fx:id="studentNameLabel" styleClass="title" text="Student Name">
+                                 <font>
+                                    <Font name="System Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="studentIdLabel" styleClass="schedule-pill" text="ID: ---" />
+                              <Label fx:id="departmentLabel" styleClass="schedule-pill" text="Department" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" spacing="12.0">
+                           <children>
+                              <Label fx:id="advisorLabel" styleClass="detail-label-header" text="Advisor: ---" />
+                              <Label text="•" textFill="#94a3b8" />
+                              <Label fx:id="termLabel" styleClass="schedule-pill-term" text="Fall 2026-2027 Academic Term" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <Region HBox.hgrow="ALWAYS" />
+                  <VBox alignment="CENTER_RIGHT" spacing="4.0">
+                     <children>
+                        <Label styleClass="form-label" text="WEEKLY CLASS TIMETABLE" />
+                        <Label text="Mon - Fri • 08:30 - 17:20" textFill="#64748b">
+                           <font>
+                              <Font size="11.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+
+            <!-- Timetable Scroll Area -->
+            <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent; -fx-border-color: #e2e8f0; -fx-border-radius: 10px;" VBox.vgrow="ALWAYS">
+               <content>
+                  <GridPane hgap="8.0" vgap="8.0">
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                     <columnConstraints>
+                        <ColumnConstraints halignment="LEFT" hgrow="NEVER" minWidth="110.0" prefWidth="120.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="130.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="130.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="130.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="130.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="130.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="42.0" prefHeight="44.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="56.0" prefHeight="58.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="56.0" prefHeight="58.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="56.0" prefHeight="58.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="56.0" prefHeight="58.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="32.0" prefHeight="34.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="56.0" prefHeight="58.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="56.0" prefHeight="58.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="56.0" prefHeight="58.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="56.0" prefHeight="58.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <!-- Headers (Row 0) -->
+                        <VBox alignment="CENTER" styleClass="schedule-header-cell">
+                           <children>
+                              <Label styleClass="schedule-header-day" text="HOURS" />
+                              <Label styleClass="schedule-header-sub" text="Period / Time" />
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" styleClass="schedule-header-cell" GridPane.columnIndex="1">
+                           <children>
+                              <Label styleClass="schedule-header-day" text="MONDAY" />
+                              <Label styleClass="schedule-header-sub" text="Weekday 1" />
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" styleClass="schedule-header-cell" GridPane.columnIndex="2">
+                           <children>
+                              <Label styleClass="schedule-header-day" text="TUESDAY" />
+                              <Label styleClass="schedule-header-sub" text="Weekday 2" />
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" styleClass="schedule-header-cell" GridPane.columnIndex="3">
+                           <children>
+                              <Label styleClass="schedule-header-day" text="WEDNESDAY" />
+                              <Label styleClass="schedule-header-sub" text="Weekday 3" />
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" styleClass="schedule-header-cell" GridPane.columnIndex="4">
+                           <children>
+                              <Label styleClass="schedule-header-day" text="THURSDAY" />
+                              <Label styleClass="schedule-header-sub" text="Weekday 4" />
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" styleClass="schedule-header-cell" GridPane.columnIndex="5">
+                           <children>
+                              <Label styleClass="schedule-header-day" text="FRIDAY" />
+                              <Label styleClass="schedule-header-sub" text="Weekday 5" />
+                           </children>
+                        </VBox>
+
+                        <!-- Period 1: 08:30 - 09:20 (Row 1) -->
+                        <VBox alignment="CENTER_LEFT" styleClass="schedule-time-cell" GridPane.rowIndex="1">
+                           <children>
+                              <Label styleClass="schedule-time-label" text="08:30 - 09:20" />
+                              <Label styleClass="schedule-period-label" text="Period 1" />
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER_LEFT" styleClass="schedule-course-card, schedule-course-blue" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <children>
+                              <Label styleClass="schedule-course-code" text="MATH 101" />
+                              <Label styleClass="schedule-course-name" text="Calculus I" />
+                              <Label styleClass="schedule-course-room" text="📍 Hall B-204" />
+                           </children>
+                        </VBox>
+                        <StackPane styleClass="schedule-slot" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                           <children><Label styleClass="schedule-slot-empty" text="— Empty —" /></children>
+                        </StackPane>
+                        <VBox alignment="CENTER_LEFT" styleClass="schedule-course-card, schedule-course-blue" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                           <children>
+                              <Label styleClass="schedule-course-code" text="MATH 101" />
+                              <Label styleClass="schedule-course-name" text="Calculus I" />
+                              <Label styleClass="schedule-course-room" text="📍 Hall B-204" />
+                           </children>
+                        </VBox>
+                        <StackPane styleClass="schedule-slot" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                           <children><Label styleClass="schedule-slot-empty" text="— Empty —" /></children>
+                        </StackPane>
+                        <VBox alignment="CENTER_LEFT" styleClass="schedule-course-card, schedule-course-purple" GridPane.columnIndex="5" GridPane.rowIndex="1">
+                           <children>
+                              <Label styleClass="schedule-course-code" text="ENG 102" />
+                              <Label styleClass="schedule-course-name" text="Academic English" />
+                              <Label styleClass="schedule-course-room" text="📍 Room C-102" />
+                           </children>
+                        </VBox>
+
+                        <!-- Period 2: 09:30 - 10:20 (Row 2) -->
+                        <VBox alignment="CENTER_LEFT" styleClass="schedule-time-cell" GridPane.rowIndex="2">
+                           <children>
+                              <Label styleClass="schedule-time-label" text="09:30 - 10:20" />
+                              <Label styleClass="schedule-period-label" text="Period 2" />
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER_LEFT" styleClass="schedule-course-card, schedule-course-blue" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <children>
+                              <Label styleClass="schedule-course-code" text="MATH 101" />
+                              <Label styleClass="schedule-course-name" text="Calculus I" />
+                              <Label styleClass="schedule-course-room" text="📍 Hall B-204" />
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER_LEFT" styleClass="schedule-course-card, schedule-course-emerald" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                           <children>
+                              <Label styleClass="schedule-course-code" text="CENG 201" />
+                              <Label styleClass="schedule-course-name" text="Data Structures" />
+                              <Label styleClass="schedule-course-room" text="📍 Lab 1" />
+                           </children>
+                        </VBox>
+                        <StackPane styleClass="schedule-slot" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                           <children><Label styleClass="schedule-slot-empty" text="— Empty —" /></children>
+                        </StackPane>
+                        <VBox alignment="CENTER_LEFT" styleClass="schedule-course-card, schedule-course-emerald" GridPane.columnIndex="4" GridPane.rowIndex="2">
+                           <children>
+                              <Label styleClass="schedule-course-code" text="CENG 201" />
+                              <Label styleClass="schedule-course-name" text="Data Structures" />
+                              <Label styleClass="schedule-course-room" text="📍 Lab 1" />
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER_LEFT" styleClass="schedule-course-card, schedule-course-purple" GridPane.columnIndex="5" GridPane.rowIndex="2">
+                           <children>
+                              <Label styleClass="schedule-course-code" text="ENG 102" />
+                              <Label styleClass="schedule-course-name" text="Academic English" />
+                              <Label styleClass="schedule-course-room" text="📍 Room C-102" />
+                           </children>
+                        </VBox>
+
+                        <!-- Period 3: 10:30 - 11:20 (Row 3) -->
+                        <VBox alignment="CENTER_LEFT" styleClass="schedule-time-cell" GridPane.rowIndex="3">
+                           <children>
+                              <Label styleClass="schedule-time-label" text="10:30 - 11:20" />
+                              <Label styleClass="schedule-period-label" text="Period 3" />
+                           </children>
+                        </VBox>
+                        <StackPane styleClass="schedule-slot" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                           <children><Label styleClass="schedule-slot-empty" text="— Empty —" /></children>
+                        </StackPane>
+                        <VBox alignment="CENTER_LEFT" styleClass="schedule-course-card, schedule-course-emerald" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                           <children>
+                              <Label styleClass="schedule-course-code" text="CENG 201" />
+                              <Label styleClass="schedule-course-name" text="Data Structures" />
+                              <Label styleClass="schedule-course-room" text="📍 Lab 1" />
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER_LEFT" styleClass="schedule-course-card, schedule-course-amber" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                           <children>
+                              <Label styleClass="schedule-course-code" text="PHYS 101" />
+                              <Label styleClass="schedule-course-name" text="General Physics" />
+                              <Label styleClass="schedule-course-room" text="📍 Amphitheater A" />
+                           </children>
+                        </VBox>
+                        <StackPane styleClass="schedule-slot" GridPane.columnIndex="4" GridPane.rowIndex="3">
+                           <children><Label styleClass="schedule-slot-empty" text="— Empty —" /></children>
+                        </StackPane>
+                        <StackPane styleClass="schedule-slot" GridPane.columnIndex="5" GridPane.rowIndex="3">
+                           <children><Label styleClass="schedule-slot-empty" text="— Empty —" /></children>
+                        </StackPane>
+
+                        <!-- Period 4: 11:30 - 12:20 (Row 4) -->
+                        <VBox alignment="CENTER_LEFT" styleClass="schedule-time-cell" GridPane.rowIndex="4">
+                           <children>
+                              <Label styleClass="schedule-time-label" text="11:30 - 12:20" />
+                              <Label styleClass="schedule-period-label" text="Period 4" />
+                           </children>
+                        </VBox>
+                        <StackPane styleClass="schedule-slot" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                           <children><Label styleClass="schedule-slot-empty" text="— Empty —" /></children>
+                        </StackPane>
+                        <StackPane styleClass="schedule-slot" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                           <children><Label styleClass="schedule-slot-empty" text="— Empty —" /></children>
+                        </StackPane>
+                        <VBox alignment="CENTER_LEFT" styleClass="schedule-course-card, schedule-course-amber" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                           <children>
+                              <Label styleClass="schedule-course-code" text="PHYS 101" />
+                              <Label styleClass="schedule-course-name" text="General Physics" />
+                              <Label styleClass="schedule-course-room" text="📍 Amphitheater A" />
+                           </children>
+                        </VBox>
+                        <StackPane styleClass="schedule-slot" GridPane.columnIndex="4" GridPane.rowIndex="4">
+                           <children><Label styleClass="schedule-slot-empty" text="— Empty —" /></children>
+                        </StackPane>
+                        <StackPane styleClass="schedule-slot" GridPane.columnIndex="5" GridPane.rowIndex="4">
+                           <children><Label styleClass="schedule-slot-empty" text="— Empty —" /></children>
+                        </StackPane>
+
+                        <!-- Lunch Break: 12:20 - 13:30 (Row 5) -->
+                        <VBox alignment="CENTER_LEFT" styleClass="schedule-time-cell" GridPane.rowIndex="5">
+                           <children>
+                              <Label styleClass="schedule-period-label" text="12:20 - 13:30" />
+                           </children>
+                        </VBox>
+                        <HBox alignment="CENTER" styleClass="schedule-slot-break" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.rowIndex="5">
+                           <children>
+                              <Label text="☕ Lunch Break &amp; Campus Recess" textFill="#64748b">
+                                 <font>
+                                    <Font name="System Italic" size="11.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+
+                        <!-- Period 5: 13:30 - 14:20 (Row 6) -->
+                        <VBox alignment="CENTER_LEFT" styleClass="schedule-time-cell" GridPane.rowIndex="6">
+                           <children>
+                              <Label styleClass="schedule-time-label" text="13:30 - 14:20" />
+                              <Label styleClass="schedule-period-label" text="Period 5" />
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER_LEFT" styleClass="schedule-course-card, schedule-course-purple" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                           <children>
+                              <Label styleClass="schedule-course-code" text="HIST 101" />
+                              <Label styleClass="schedule-course-name" text="Modern History" />
+                              <Label styleClass="schedule-course-room" text="📍 Room D-201" />
+                           </children>
+                        </VBox>
+                        <StackPane styleClass="schedule-slot" GridPane.columnIndex="2" GridPane.rowIndex="6">
+                           <children><Label styleClass="schedule-slot-empty" text="— Empty —" /></children>
+                        </StackPane>
+                        <StackPane styleClass="schedule-slot" GridPane.columnIndex="3" GridPane.rowIndex="6">
+                           <children><Label styleClass="schedule-slot-empty" text="— Empty —" /></children>
+                        </StackPane>
+                        <VBox alignment="CENTER_LEFT" styleClass="schedule-course-card, schedule-course-blue" GridPane.columnIndex="4" GridPane.rowIndex="6">
+                           <children>
+                              <Label styleClass="schedule-course-code" text="MATH 101 (Recitation)" />
+                              <Label styleClass="schedule-course-name" text="Problem Solving" />
+                              <Label styleClass="schedule-course-room" text="📍 Room B-105" />
+                           </children>
+                        </VBox>
+                        <StackPane styleClass="schedule-slot" GridPane.columnIndex="5" GridPane.rowIndex="6">
+                           <children><Label styleClass="schedule-slot-empty" text="— Empty —" /></children>
+                        </StackPane>
+
+                        <!-- Period 6: 14:30 - 15:20 (Row 7) -->
+                        <VBox alignment="CENTER_LEFT" styleClass="schedule-time-cell" GridPane.rowIndex="7">
+                           <children>
+                              <Label styleClass="schedule-time-label" text="14:30 - 15:20" />
+                              <Label styleClass="schedule-period-label" text="Period 6" />
+                           </children>
+                        </VBox>
+                        <StackPane styleClass="schedule-slot" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                           <children><Label styleClass="schedule-slot-empty" text="— Empty —" /></children>
+                        </StackPane>
+                        <StackPane styleClass="schedule-slot" GridPane.columnIndex="2" GridPane.rowIndex="7">
+                           <children><Label styleClass="schedule-slot-empty" text="— Empty —" /></children>
+                        </StackPane>
+                        <StackPane styleClass="schedule-slot" GridPane.columnIndex="3" GridPane.rowIndex="7">
+                           <children><Label styleClass="schedule-slot-empty" text="— Empty —" /></children>
+                        </StackPane>
+                        <StackPane styleClass="schedule-slot" GridPane.columnIndex="4" GridPane.rowIndex="7">
+                           <children><Label styleClass="schedule-slot-empty" text="— Empty —" /></children>
+                        </StackPane>
+                        <StackPane styleClass="schedule-slot" GridPane.columnIndex="5" GridPane.rowIndex="7">
+                           <children><Label styleClass="schedule-slot-empty" text="— Empty —" /></children>
+                        </StackPane>
+
+                        <!-- Period 7: 15:30 - 16:20 (Row 8) -->
+                        <VBox alignment="CENTER_LEFT" styleClass="schedule-time-cell" GridPane.rowIndex="8">
+                           <children>
+                              <Label styleClass="schedule-time-label" text="15:30 - 16:20" />
+                              <Label styleClass="schedule-period-label" text="Period 7" />
+                           </children>
+                        </VBox>
+                        <StackPane styleClass="schedule-slot" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                           <children><Label styleClass="schedule-slot-empty" text="— Empty —" /></children>
+                        </StackPane>
+                        <StackPane styleClass="schedule-slot" GridPane.columnIndex="2" GridPane.rowIndex="8">
+                           <children><Label styleClass="schedule-slot-empty" text="— Empty —" /></children>
+                        </StackPane>
+                        <StackPane styleClass="schedule-slot" GridPane.columnIndex="3" GridPane.rowIndex="8">
+                           <children><Label styleClass="schedule-slot-empty" text="— Empty —" /></children>
+                        </StackPane>
+                        <StackPane styleClass="schedule-slot" GridPane.columnIndex="4" GridPane.rowIndex="8">
+                           <children><Label styleClass="schedule-slot-empty" text="— Empty —" /></children>
+                        </StackPane>
+                        <StackPane styleClass="schedule-slot" GridPane.columnIndex="5" GridPane.rowIndex="8">
+                           <children><Label styleClass="schedule-slot-empty" text="— Empty —" /></children>
+                        </StackPane>
+
+                        <!-- Period 8: 16:30 - 17:20 (Row 9) -->
+                        <VBox alignment="CENTER_LEFT" styleClass="schedule-time-cell" GridPane.rowIndex="9">
+                           <children>
+                              <Label styleClass="schedule-time-label" text="16:30 - 17:20" />
+                              <Label styleClass="schedule-period-label" text="Period 8" />
+                           </children>
+                        </VBox>
+                        <StackPane styleClass="schedule-slot" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                           <children><Label styleClass="schedule-slot-empty" text="— Empty —" /></children>
+                        </StackPane>
+                        <StackPane styleClass="schedule-slot" GridPane.columnIndex="2" GridPane.rowIndex="9">
+                           <children><Label styleClass="schedule-slot-empty" text="— Empty —" /></children>
+                        </StackPane>
+                        <StackPane styleClass="schedule-slot" GridPane.columnIndex="3" GridPane.rowIndex="9">
+                           <children><Label styleClass="schedule-slot-empty" text="— Empty —" /></children>
+                        </StackPane>
+                        <StackPane styleClass="schedule-slot" GridPane.columnIndex="4" GridPane.rowIndex="9">
+                           <children><Label styleClass="schedule-slot-empty" text="— Empty —" /></children>
+                        </StackPane>
+                        <StackPane styleClass="schedule-slot" GridPane.columnIndex="5" GridPane.rowIndex="9">
+                           <children><Label styleClass="schedule-slot-empty" text="— Empty —" /></children>
+                        </StackPane>
+                     </children>
+                  </GridPane>
+               </content>
+            </ScrollPane>
+
+            <!-- Bottom Action & Info Bar -->
+            <HBox alignment="CENTER_LEFT" spacing="12.0">
+               <children>
+                  <Label text="ℹ️ Phase 1 Layout Preview: Timetable slots and course items can be populated and customized in Phase 2." textFill="#64748b">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+                  <Region HBox.hgrow="ALWAYS" />
+                  <Button fx:id="closeButton" mnemonicParsing="false" onAction="#closeDialog" styleClass="btn-secondary" text="Close" />
+               </children>
+               <VBox.margin>
+                  <Insets top="4.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="18.0" left="20.0" right="20.0" top="18.0" />
+         </padding>
+      </VBox>
+   </children>
+</StackPane>

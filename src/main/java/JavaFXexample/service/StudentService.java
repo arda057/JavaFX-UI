@@ -8,23 +8,27 @@ import JavaFXexample.repository.StudentRepository;
 public class StudentService {
     private final StudentRepository repository = new StudentRepository();
 
-    public boolean addStudent(Student student){
-        return repository.insertStudent(student);
+    public void addStudent(Student student) {
+        repository.insertStudent(student);
     }
 
-    public boolean updateStudent(int id, Student student){
-        return repository.updateStudent(id, student);
+    public void updateStudent(int id, Student student) {
+        repository.updateStudent(id, student);
     }
 
-    public void deleteStudent(int id){
+    public void deleteStudent(int id) {
         repository.deleteStudent(id);
     }
 
-    public List<Student> getStudents(){
+    public List<Student> getStudents() {
         return repository.getStudents();
     }
 
-    public boolean updateStudentPhoto(int id, byte[] photo){
-        return repository.updatePhoto(id, photo);
+    public byte[] getStudentPhoto(int id) {
+        return repository.getPhoto(id);
+    }
+
+    public void updateStudentPhoto(int id, byte[] photo) {
+        repository.updatePhoto(id, photo);
     }
 }
