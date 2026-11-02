@@ -10,17 +10,18 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 
-<StackPane maxHeight="600.0" maxWidth="800.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="JavaFXexample.controller.LoginController">
+<StackPane maxHeight="620.0" maxWidth="840.0" prefHeight="620.0" prefWidth="840.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="JavaFXexample.controller.LoginController">
    <children>
       <GridPane>
          <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="55.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="45.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="52.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="48.0" />
          </columnConstraints>
          <rowConstraints>
             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
@@ -28,69 +29,100 @@
          <children>
             <VBox maxWidth="1.7976931348623157E308" prefWidth="0.0" styleClass="left-panel" />
             
-            <VBox alignment="TOP_CENTER" maxWidth="1.7976931348623157E308" prefWidth="0.0" styleClass="card" GridPane.columnIndex="1">
+                        <VBox alignment="TOP_CENTER" maxWidth="1.7976931348623157E308" prefWidth="0.0" styleClass="card" translateX="-5.0" GridPane.columnIndex="1">
                <children>
-                  <ImageView fitHeight="150.0" fitWidth="275.0" pickOnBounds="true" preserveRatio="true" styleClass="logo">
+                  <ImageView fitHeight="90.0" fitWidth="220.0" pickOnBounds="true" preserveRatio="true" styleClass="logo">
                      <image>
                         <Image url="@../images/sms.png" />
                      </image>
                      <VBox.margin>
-                        <Insets />
+                        <Insets bottom="5.0" />
                      </VBox.margin>
                   </ImageView>
-                  <Label alignment="CENTER" styleClass="title" text="Login">
+                  
+                              <Label alignment="CENTER" styleClass="title" text="Welcome Back">
                      <VBox.margin>
-                        <Insets />
+                        <Insets bottom="2.0" />
                      </VBox.margin>
                   </Label>
-                  <VBox maxWidth="300.0" spacing="5.0" styleClass="form">
+                  
+                              <Label styleClass="subtitle" text="Sign in to manage student records">
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </Label>
+                  
+                              <VBox maxWidth="280.0" spacing="14.0" styleClass="form">
                      <children>
-                        <VBox spacing="5.0">
+                        <VBox spacing="6.0">
                            <children>
-                              <Label text="Username" />
-                              <TextField fx:id="usernameField" promptText="Username" styleClass="field" />
+                              <Label styleClass="form-label" text="Username" />
+                              <TextField fx:id="usernameField" promptText="Enter your username" styleClass="field" />
                            </children>
                         </VBox>
-                        <VBox spacing="5.0">
+                        
+                                    <VBox spacing="6.0">
                            <children>
-                              <Label text="Password" />
+                              <Label styleClass="form-label" text="Password" />
                               <StackPane alignment="CENTER_RIGHT">
                                  <children>
-                                    <PasswordField fx:id="passwordField" promptText="Password" styleClass="field" />
-                                    <TextField fx:id="visiblePasswordField" promptText="Password" styleClass="field" visible="false" />
-                                    <Button fx:id="togglePasswordButton" alignment="BOTTOM_RIGHT" focusTraversable="false" mnemonicParsing="false" onAction="#togglePasswordVisibility" styleClass="togglepassword-button" text="👁" />
+                                    <PasswordField fx:id="passwordField" promptText="Enter your password" styleClass="field" />
+                                    <TextField fx:id="visiblePasswordField" promptText="Enter your password" styleClass="field" visible="false" />
+                                    <Button fx:id="togglePasswordButton" focusTraversable="false" mnemonicParsing="false" onAction="#togglePasswordVisibility" styleClass="togglepassword-button" text="👁">
+                                       <StackPane.margin>
+                                          <Insets right="6.0" />
+                                       </StackPane.margin>
+                                    </Button>
                                  </children>
                               </StackPane>
                            </children>
                         </VBox>
-                        <CheckBox fx:id="rememberCheckBox" focusTraversable="false" mnemonicParsing="false" text="Remember Me">
-                           <VBox.margin>
-                              <Insets top="10.0" />
-                           </VBox.margin>
-                        </CheckBox>
-                        <VBox alignment="CENTER" minHeight="70.0" spacing="20.0">
+                        
+                                    <HBox alignment="CENTER_LEFT">
                            <children>
-                              <Button fx:id="loginButton" alignment="CENTER" minHeight="35.0" minWidth="300.0" mnemonicParsing="false" onAction="#login" styleClass="login-button" text="Login">
-                                 <opaqueInsets>
-                                    <Insets />
-                                 </opaqueInsets>
+                              <CheckBox fx:id="rememberCheckBox" focusTraversable="false" mnemonicParsing="false" text="Remember me" />
+                           </children>
+                           <VBox.margin>
+                              <Insets top="2.0" />
+                           </VBox.margin>
+                        </HBox>
+                        
+                                    <VBox alignment="CENTER" spacing="14.0">
+                           <children>
+                              <Button fx:id="loginButton" alignment="CENTER" maxWidth="1.7976931348623157E308" minHeight="42.0" mnemonicParsing="false" onAction="#login" styleClass="login-button" text="Sign In">
                                  <VBox.margin>
-                                    <Insets top="10.0" />
+                                    <Insets top="4.0" />
                                  </VBox.margin>
                               </Button>
-                              <Line endX="150.0" scaleY="0.3" startX="-150.0" />
-                              <Button minHeight="35.0" minWidth="300.0" mnemonicParsing="false" onAction="#toRegister" styleClass="register-button" text="Register" />
+                              
+                                          <HBox alignment="CENTER" spacing="10.0">
+                                 <children>
+                                    <Line endX="60.0" stroke="#e2e8f0" strokeWidth="1.5" />
+                                    <Label text="or" textFill="#94a3b8" />
+                                    <Line endX="60.0" stroke="#e2e8f0" strokeWidth="1.5" />
+                                 </children>
+                              </HBox>
+                              
+                                          <Button maxWidth="1.7976931348623157E308" minHeight="38.0" mnemonicParsing="false" onAction="#toRegister" styleClass="register-button" text="Create an Account" />
                            </children>
                         </VBox>
                      </children>
                   </VBox>
-                  <Label fx:id="resultLabel" />
+                  
+                              <Label fx:id="resultLabel">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Label>
                </children>
                <padding>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                  <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
                </padding>
             </VBox>
          </children>
       </GridPane>
    </children>
+   <padding>
+      <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+   </padding>
 </StackPane>

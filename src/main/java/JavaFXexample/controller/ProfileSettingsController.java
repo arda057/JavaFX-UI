@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
+import JavaFXexample.exception.DataAccessException;
 import JavaFXexample.service.UserService;
 import JavaFXexample.util.AlertHelper;
 import JavaFXexample.util.SceneManager;
@@ -65,6 +66,8 @@ public class ProfileSettingsController {
 
             } catch(IOException e){
                 AlertHelper.showError("Photo Error", "Could not load the selected photo.", "Please try again.");
+            } catch (DataAccessException e) {
+                AlertHelper.showException("Photo Error", "Could not save the selected photo.", e);
             }
         }
     }
@@ -76,12 +79,13 @@ public class ProfileSettingsController {
         }
         
         try {
-            AlertHelper.showConfirmation("Delete Photo", "Are you sure?", "This action is irreversible.");
-            userService.deletePhoto(Session.getCurrentUser().getId());
-            Session.getCurrentUser().setPhoto(null);
-            loadPhoto();
-        } catch (Exception e) {
-            AlertHelper.showError("Photo Error", "Could not delete the photo.", "Please try again.");
+            if(AlertHelper.showConfirmation("Delete Photo", "Are you sure?", "This action is irreversible.")){
+                userService.deletePhoto(Session.getCurrentUser().getId());
+                Session.getCurrentUser().setPhoto(null);
+                loadPhoto();
+            }
+        } catch (DataAccessException e) {
+            AlertHelper.showException("Photo Error", "Could not delete the photo.", e);
         }
     }
 

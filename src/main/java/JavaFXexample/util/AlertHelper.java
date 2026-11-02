@@ -23,6 +23,11 @@ public class AlertHelper {
 
         alert.showAndWait();
     }
+
+    public static void showException(String title, String header, Throwable error) {
+        String message = error.getMessage() != null ? error.getMessage() : "An unexpected error occurred.";
+        showError(title, header, message);
+    }
     
     public static void showWarning(String title, String header, String content){
         Alert alert = new Alert(Alert.AlertType.WARNING);

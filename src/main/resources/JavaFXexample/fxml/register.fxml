@@ -10,77 +10,100 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="JavaFXexample.controller.RegisterController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="480.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="JavaFXexample.controller.RegisterController">
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
    <children>
-      <VBox alignment="TOP_CENTER" maxWidth="1.7976931348623157E308" prefWidth="0.0" styleClass="card">
+      <VBox alignment="CENTER" maxHeight="570.0" maxWidth="400.0" styleClass="card">
          <children>
-            <VBox alignment="CENTER">
+            <ImageView fitHeight="70.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true" styleClass="logo">
+               <image>
+                  <Image url="@../images/sms.png" />
+               </image>
+               <VBox.margin>
+                  <Insets bottom="4.0" />
+               </VBox.margin>
+            </ImageView>
+            
+            <Label alignment="CENTER" styleClass="title" text="Create Account">
+               <VBox.margin>
+                  <Insets bottom="2.0" />
+               </VBox.margin>
+            </Label>
+            
+            <Label styleClass="subtitle" text="Enter your details to register">
+               <VBox.margin>
+                  <Insets bottom="18.0" />
+               </VBox.margin>
+            </Label>
+            
+            <VBox maxWidth="290.0" spacing="12.0" styleClass="form">
                <children>
-                  <ImageView fitHeight="150.0" fitWidth="275.0" pickOnBounds="true" preserveRatio="true" styleClass="logo">
-                     <image>
-                        <Image url="@../images/sms.png" />
-                     </image>
-                  </ImageView>
-                  <Label alignment="CENTER" styleClass="title" text="Register" />
-                  <VBox maxWidth="300.0" spacing="5.0" styleClass="form">
+                  <VBox spacing="5.0">
                      <children>
-                        <VBox spacing="5.0">
-                           <children>
-                              <Label text="Username" />
-                              <TextField fx:id="usernameField" promptText="Username" styleClass="field" />
-                           </children>
-                        </VBox>
-                        <VBox spacing="12.0">
-                           <children>
-                              <VBox spacing="5.0">
-                                 <children>
-                                    <Label text="Password" />
-                                    <StackPane alignment="CENTER_RIGHT">
-                                       <children>
-                                          <PasswordField fx:id="passwordField" promptText="Password" styleClass="field" />
-                                          <TextField fx:id="visiblePasswordField" promptText="Password" styleClass="field" visible="false" />
-                                          <Button fx:id="togglePasswordButton1" alignment="BOTTOM_RIGHT" focusTraversable="false" mnemonicParsing="false" onAction="#togglePasswordVisibility" styleClass="togglepassword-button" text="👁" />
-                                       </children>
-                                    </StackPane>
-                                 </children>
-                              </VBox>
-                              <VBox spacing="5.0">
-                                 <children>
-                                    <Label text="Confirm Password" />
-                                    <StackPane alignment="CENTER_RIGHT">
-                                       <children>
-                                          <PasswordField fx:id="confirmPasswordField" promptText="Confirm Password" styleClass="field" />
-                                          <TextField fx:id="confirmVisiblePasswordField" promptText="Password" styleClass="field" visible="false" />
-                                          <Button fx:id="togglePasswordButton" alignment="BOTTOM_RIGHT" focusTraversable="false" mnemonicParsing="false" onAction="#confirmTogglePasswordVisibility" styleClass="togglepassword-button" text="👁" />
-                                       </children>
-                                    </StackPane>
-                                 </children>
-                              </VBox>
-                           </children>
-                        </VBox>
-                        <VBox alignment="CENTER" minHeight="70.0">
-                           <children>
-                              <Button fx:id="createAccountButton" alignment="CENTER" minHeight="35.0" minWidth="300.0" mnemonicParsing="false" onAction="#register" styleClass="login-button" text="Create Account">
-                                 <opaqueInsets>
-                                    <Insets />
-                                 </opaqueInsets>
-                              </Button>
-                           </children>
-                        </VBox>
+                        <Label styleClass="form-label" text="Username" />
+                        <TextField fx:id="usernameField" promptText="Choose a username" styleClass="field" />
                      </children>
                   </VBox>
-                  <Label fx:id="resultLabel" visible="false" />
-                  <Button mnemonicParsing="false" onAction="#toLoginPage" styleClass="back-button" text="← Back">
-                     <VBox.margin>
-                        <Insets top="5.0" />
-                     </VBox.margin>
-                  </Button>
+                  
+                  <VBox spacing="5.0">
+                     <children>
+                        <Label styleClass="form-label" text="Password" />
+                        <StackPane alignment="CENTER_RIGHT">
+                           <children>
+                              <PasswordField fx:id="passwordField" promptText="Create a password" styleClass="field" />
+                              <TextField fx:id="visiblePasswordField" promptText="Create a password" styleClass="field" visible="false" />
+                              <Button fx:id="togglePasswordButton" focusTraversable="false" mnemonicParsing="false" onAction="#togglePasswordVisibility" styleClass="togglepassword-button" text="👁">
+                                 <StackPane.margin>
+                                    <Insets right="6.0" />
+                                 </StackPane.margin>
+                              </Button>
+                           </children>
+                        </StackPane>
+                     </children>
+                  </VBox>
+                  
+                  <VBox spacing="5.0">
+                     <children>
+                        <Label styleClass="form-label" text="Confirm Password" />
+                        <StackPane alignment="CENTER_RIGHT">
+                           <children>
+                              <PasswordField fx:id="confirmPasswordField" promptText="Re-enter password" styleClass="field" />
+                              <TextField fx:id="confirmVisiblePasswordField" promptText="Re-enter password" styleClass="field" visible="false" />
+                              <Button fx:id="togglePasswordButton1" focusTraversable="false" mnemonicParsing="false" onAction="#confirmTogglePasswordVisibility" styleClass="togglepassword-button" text="👁">
+                                 <StackPane.margin>
+                                    <Insets right="6.0" />
+                                 </StackPane.margin>
+                              </Button>
+                           </children>
+                        </StackPane>
+                     </children>
+                  </VBox>
+                  
+                  <VBox alignment="CENTER" spacing="10.0">
+                     <children>
+                        <Button fx:id="createAccountButton" alignment="CENTER" maxWidth="1.7976931348623157E308" minHeight="42.0" mnemonicParsing="false" onAction="#register" styleClass="login-button" text="Register Now">
+                           <VBox.margin>
+                              <Insets top="6.0" />
+                           </VBox.margin>
+                        </Button>
+                        
+                        <Button mnemonicParsing="false" onAction="#toLoginPage" styleClass="back-button" text="← Back to Login" />
+                     </children>
+                  </VBox>
                </children>
-               <padding>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-               </padding>
             </VBox>
+            
+            <Label fx:id="resultLabel" visible="false">
+               <VBox.margin>
+                  <Insets top="8.0" />
+               </VBox.margin>
+            </Label>
          </children>
+         <padding>
+            <Insets bottom="28.0" left="28.0" right="28.0" />
+         </padding>
       </VBox>
    </children>
 </StackPane>

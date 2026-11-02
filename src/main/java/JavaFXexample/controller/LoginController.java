@@ -1,15 +1,19 @@
 package JavaFXexample.controller;
 
-import javafx.fxml.FXML;
+import JavaFXexample.exception.DataAccessException;
 import JavaFXexample.model.User;
 import JavaFXexample.service.UserService;
+import JavaFXexample.util.AsyncTask;
 import JavaFXexample.util.SceneManager;
 import JavaFXexample.util.Session;
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -37,12 +41,13 @@ public class LoginController {
     private FadeTransition fadeOut;
 
     UserService userService = new UserService();
+    private final BooleanProperty busy = new SimpleBooleanProperty(false);
 
     @FXML
     public void initialize() {
         loginButton.disableProperty().bind(
                 usernameField.textProperty().isEmpty().or(
-                        passwordField.textProperty().isEmpty()));
+                        passwordField.textProperty().isEmpty()).or(busy));
 
         loginButton.setDefaultButton(true);
         loginButton.setOnAction(event -> login(event));
@@ -81,11 +86,27 @@ public class LoginController {
 
     @FXML
     private void login(ActionEvent event) {
+        String username = usernameField.getText();
+        String password = passwordField.getText();
 
-        User user = userService.login(usernameField.getText(), passwordField.getText());
+        AsyncTask.run(
+                () -> userService.login(username, password),
+                user -> handleLoginResult(event, user),
+                error -> {
+                    if (error instanceof DataAccessException) {
+                        resultLabel.setText(error.getMessage());
+                    } else {
+                        resultLabel.setText("Login failed");
+                    }
+                    showLoginError();
+                },
+                busy);
+    }
+
+    private void handleLoginResult(ActionEvent event, User user) {
         if (user != null) {
             Session.setCurrentUser(user);
-            
+
             resultLabel.setText("Login successful");
             resultLabel.getStyleClass().setAll("label", "succsess");
 
@@ -96,6 +117,11 @@ public class LoginController {
             }
         } else {
             resultLabel.setText("Wrong username or password");
+            showLoginError();
+        }
+    }
+
+    private void showLoginError() {
             resultLabel.getStyleClass().setAll("label", "error");
             resultLabel.setOpacity(1.0);
             resultLabel.setVisible(true);
@@ -129,7 +155,6 @@ public class LoginController {
             tt.setOnFinished(e -> loginButton.setTranslateX(0));
 
             tt.play();
-        }
     }
 
     @FXML

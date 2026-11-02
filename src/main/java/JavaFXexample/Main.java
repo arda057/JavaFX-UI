@@ -2,8 +2,10 @@ package JavaFXexample;
 
 import java.sql.Connection;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import JavaFXexample.database.DatabaseManager;
-import JavaFXexample.service.UserService;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -11,18 +13,21 @@ import javafx.stage.Stage;
 
 public class Main extends Application
 {
+    private static final Logger log = LoggerFactory.getLogger(Main.class);
     @Override
     public void start(Stage stage) throws Exception
     {
+        DatabaseManager.initialize();
+
         FXMLLoader loader =
                 new FXMLLoader(
-                    getClass().getResource("fxml/login.fxml")
+                    getClass().getResource("/JavaFXexample/fxml/login.fxml")
                 );
 
         Scene scene =
                 new Scene(loader.load());
 
-        scene.getStylesheets().add(getClass().getResource("css/style.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("/JavaFXexample/css/style.css").toExternalForm());
 
         stage.setScene(scene);
 
@@ -37,12 +42,9 @@ public class Main extends Application
             System.out.println("Connected");
             conn.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Could not verify database connection", e);
         }
-        DatabaseManager.createTable();
-        DatabaseManager.createUsersTable();
-
-        new UserService().register("admin", "1234");
+        
     }
 
     public static void main(String[] args)

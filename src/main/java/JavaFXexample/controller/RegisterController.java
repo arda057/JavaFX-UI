@@ -1,9 +1,14 @@
 package JavaFXexample.controller;
 
+import JavaFXexample.exception.DataAccessException;
+import JavaFXexample.exception.DuplicateEntityException;
 import JavaFXexample.service.UserService;
 import JavaFXexample.util.AlertHelper;
+import JavaFXexample.util.AsyncTask;
 import JavaFXexample.util.SceneManager;
 import javafx.animation.FadeTransition;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -31,6 +36,7 @@ public class RegisterController {
     private TextField confirmVisiblePasswordField;
 
     UserService userService = new UserService();
+    private final BooleanProperty busy = new SimpleBooleanProperty(false);
 
     private FadeTransition fadeOut;
 
@@ -39,7 +45,7 @@ public class RegisterController {
         createAccountButton.disableProperty().bind(
                 usernameField.textProperty().isEmpty().or(
                         passwordField.textProperty().isEmpty().or(
-                                confirmPasswordField.textProperty().isEmpty())));
+                                confirmPasswordField.textProperty().isEmpty())).or(busy));
 
         visiblePasswordField.textProperty().bindBidirectional(
                 passwordField.textProperty());
@@ -98,7 +104,7 @@ public class RegisterController {
     }
 
     @FXML
-    private void register() {
+    private void register(ActionEvent event) {
         if (!passwordField.getText().equals(confirmPasswordField.getText())) {
             resultLabel.setText("Passwords do not match");
             resultLabel.getStyleClass().setAll("label", "error");
@@ -109,7 +115,7 @@ public class RegisterController {
                 fadeOut.stop();
             }
 
-            FadeTransition fadeOut = new FadeTransition(Duration.seconds(2), resultLabel);
+            fadeOut = new FadeTransition(Duration.seconds(2), resultLabel);
 
             fadeOut.setFromValue(0.8);
             fadeOut.setToValue(0.0);
@@ -123,15 +129,24 @@ public class RegisterController {
             fadeOut.play();
             return;
         }
-        boolean success = userService.register(usernameField.getText(), passwordField.getText());
-
-        if(success){
-            AlertHelper.showInfo("Success",
-                    "User Added",
-                    "The user has been added successfully.");
-        } else {
-            AlertHelper.showError("Error", "This user name already taken.", "User could not be added");
-        }
+        AsyncTask.run(
+                () -> userService.register(usernameField.getText(), passwordField.getText()),
+                () -> {
+                    AlertHelper.showInfo("Success",
+                            "User Added",
+                            "The user has been added successfully.");
+                    SceneManager.FXMLloader(event, "/JavaFXexample/fxml/login.fxml", "/JavaFXexample/css/style.css", false);
+                },
+                error -> {
+                    if (error instanceof DuplicateEntityException) {
+                        AlertHelper.showException("Error", "This user name already taken.", error);
+                    } else if (error instanceof DataAccessException) {
+                        AlertHelper.showException("Error", "User could not be added", error);
+                    } else {
+                        AlertHelper.showException("Error", "User could not be added", error);
+                    }
+                },
+                busy);
     }
 
 }
