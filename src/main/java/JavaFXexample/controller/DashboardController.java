@@ -53,4 +53,9 @@ public class DashboardController {
     private void profileSettings(ActionEvent event){
         SceneManager.FXMLloader(event, "/JavaFXexample/fxml/profile-settings.fxml", "/JavaFXexample/css/style.css", false);
     }
+
+    @FXML
+    private void curriculum(ActionEvent event){
+        SceneManager.FXMLloader(event, "/JavaFXexample/fxml/curriculum.fxml", "/JavaFXexample/css/style.css", true);
+    }
 }

@@ -181,4 +181,31 @@ public class SceneManager {
             log.error("Failed to open course-schedule dialog", e);
         }
     }
+
+    public static void curriculumDialogLoader(JavaFXexample.model.CurriculumCourse course, String preselectedDepartment, Runnable onSave) {
+        try {
+            FXMLLoader loader = new FXMLLoader(SceneManager.class.getResource("/JavaFXexample/fxml/curriculum-dialog.fxml"));
+            Parent root = loader.load();
+
+            JavaFXexample.controller.CurriculumCourseDialogController controller = loader.getController();
+            if (course != null) {
+                controller.setCourseForEdit(course);
+            } else if (preselectedDepartment != null) {
+                controller.setPreselectedDepartment(preselectedDepartment);
+            }
+            controller.setOnSaveCallback(onSave);
+
+            Stage dialogStage = new Stage();
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(SceneManager.class.getResource("/JavaFXexample/css/dialog-style.css").toExternalForm());
+
+            dialogStage.setScene(scene);
+            dialogStage.setTitle(course != null ? "Edit Curriculum Course" : "Add Curriculum Course");
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+            dialogStage.setResizable(false);
+            dialogStage.showAndWait();
+        } catch (Exception e) {
+            log.error("Failed to open curriculum dialog", e);
+        }
+    }
 }
